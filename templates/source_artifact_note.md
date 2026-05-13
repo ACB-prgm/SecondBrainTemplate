@@ -1,49 +1,29 @@
-# <Source Artifact Title>
+# {Source Artifact Title}
 
-| Field | Value |
-|---|---|
-| Subject | `<subject>` |
-| Artifact Type | `pdf | image | scan | spreadsheet | email | external-link | other` |
-| Status | `current` |
-| Original Filename | `<filename>` |
-| External URL | `<url-if-applicable>` |
-| Created UTC | `<created-utc>` |
-| Indexed UTC | `<indexed-utc>` |
+Metadata:
+- Subject: `{subject}`
+- Source Type: `{source_type}`
+- External URL / Storage Location: `{external_url}`
+- Date Created / Received: `{source_date}`
+- Companion Note Created UTC: `{created_utc}`
+- Status: `current`
+- Sensitivity: `{sensitivity}`
+- Related Entities: `{related_entities}`
+- Tags: `{tags}`
+- Aliases: `{aliases}`
 
-## Purpose
+## Source Summary
 
-Describe why this artifact was saved.
-
-## Source Handling
-
-Explain where the source artifact lives.
-
-Examples:
-
-- Stored directly in this repository
-- Stored externally in Google Drive
-- Linked from Gmail
-- User-provided text only
-
-## Summary
-
-Concise summary of the artifact.
+Concise description of the artifact.
 
 ## Extracted Key Facts
 
-- Fact 1
-- Fact 2
+- 
 
-## Retrieval Keywords
+## Original Text / OCR / User Wording
 
-- keyword
-- alias
-- abbreviation
+Include source text or OCR if available and appropriate.
 
-## Related Records
+## Retrieval Notes
 
-- `<path-or-link>`
-
-## Notes
-
-Additional context, limitations, or uncertainty.
+Describe how the artifact should be found later.

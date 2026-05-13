@@ -1,39 +1,24 @@
 # SecondBrain Manifest
 
-This file is the human-readable map of the repository.
-
-The assistant must update this file when new top-level subjects are created or when major canonical files are added, moved, archived, or superseded.
-
-## Repository Status
-
-| Field | Value |
-|---|---|
-| Repository Type | Private SecondBrain repository generated from template |
-| Structure Model | Emergent subject folders |
-| Last Reviewed UTC | Not yet reviewed |
-| Last Template Sync UTC | Not yet synced |
+This is the human-readable map of the repository. It should summarize the active subject folders, canonical records, important files, and retrieval handles.
 
 ## Subjects
 
-No subject folders have been created yet.
+| Subject | Purpose | README | Last Updated |
+|---|---|---|---|
+| _No subjects yet_ | Create a subject folder only when durable content justifies it. |  |  |
 
-When a durable subject is created, add a row:
+## Important Records
 
-| Subject | Purpose | README | Canonical Files | Last Updated UTC |
-|---|---|---|---|---|
+| Title | Type | Subject | Path | Status | Last Updated |
+|---|---|---|---|---|---|
 
-## Canonical Indexes
+## Source Artifacts
 
-| Path | Purpose |
-|---|---|
-| `index/files.json` | Machine-readable registry of stored source artifacts, notes, and generated files |
-| `index/subjects.json` | Machine-readable registry of top-level subject folders |
-| `index/entities.json` | Machine-readable registry of people, organizations, systems, properties, accounts, and other durable entities |
-| `index/tags.json` | Machine-readable registry of cross-cutting tags |
-| `index/aliases.json` | Alternate names, misspellings, abbreviations, and lookup terms |
+| Title | Type | Subject | External Link / Path | Companion Note | Status |
+|---|---|---|---|---|---|
 
-## Notes for the Assistant
+## Notes
 
-- Do not use this manifest as the only source of truth.
-- Read the relevant subject README and index records before modifying a subject.
-- Keep this file concise; detailed records belong in subject folders and JSON indexes.
+- Do not use this file as the only index. Keep `index/files.json`, `index/subjects.json`, and related indexes current.
+- Keep this file concise. Detailed facts belong in subject files and append-only logs.

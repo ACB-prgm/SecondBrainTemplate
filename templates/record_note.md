@@ -1,45 +1,32 @@
-# <Record Title>
+# {Record Title}
 
-| Field | Value |
-|---|---|
-| Subject | `<subject>` |
-| Record Type | `<record-type>` |
-| Status | `current` |
-| Created UTC | `<created-utc>` |
-| Updated UTC | `<updated-utc>` |
-| Source | `<source>` |
+Metadata:
+- Subject: `{subject}`
+- Type: `{record_type}`
+- Status: `current`
+- Created UTC: `{created_utc}`
+- Last Updated UTC: `{last_updated_utc}`
+- Sensitivity: `{sensitivity}`
+- Related Entities: `{related_entities}`
+- Tags: `{tags}`
+- Aliases: `{aliases}`
 
 ## Summary
 
-Brief retrieval-oriented summary.
+Short durable summary.
 
-## Original User Wording
+## Original Wording / Source Notes
 
-> Preserve exact wording here when the user directly provides a record, event, or experience.
+Preserve original wording when applicable.
 
 ## Extracted Facts
 
-- Fact 1
-- Fact 2
+- 
 
-## Uncertainty / Gaps
+## Related Files / Links
 
-- Unknown or ambiguous field
+- 
 
-## Related Files
+## Update Log
 
-- `<path-or-link>`
-
-## Related Entities
-
-- `<entity>`
-
-## Tags
-
-- `<tag>`
-
-## Change Log
-
-### `<created-utc>`
-
-- Created record.
+- `{created_utc}` — Created.
