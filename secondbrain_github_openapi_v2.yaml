@@ -7,7 +7,7 @@ info:
     GitHub-backed storage action for a private repository named SecondBrain,
     created from the fixed public template repository ACB-prgm/SecondBrainTemplate.
     Uses GitHub's Git Database API for raw text reads, direct tree-content writes,
-    atomic commits, and managed template sync based on the template main branch HEAD SHA.
+    atomic commits, and managed template sync based on the template main branch HEAD SHA. SRC = 'https://github.com/ACB-prgm/SecondBrainTemplate/blob/dev/secondbrain_github_openapi_v2.yaml'
 
 servers:
   - url: https://api.github.com
