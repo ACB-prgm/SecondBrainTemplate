@@ -6,13 +6,13 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 
 1. Use `getAuthenticatedUser` to identify the GitHub account.
 2. Check for `{owner}/SecondBrain` with `getSecondBrainRepo`.
-3. If missing, create it from the public template repo using `createSecondBrainFromTemplate`.
-4. Before or during creation, read the template branch HEAD SHA with `getTemplateBranchRef`.
+3. If missing, create it from the fixed public template repository using `createSecondBrainFromTemplate`.
+4. Before or during creation, read the fixed template main branch HEAD SHA with `getTemplateMainBranchRef`.
 5. After the target repo exists, create `.secondbrain/TEMPLATE_STATE.json` in `SecondBrain` recording that SHA as `last_synced_template_sha`.
 6. Read `.secondbrain/TEMPLATE_CONFIG.json` from `SecondBrain`.
 7. Read every file listed in `required_bootstrap_files` from `SecondBrain`.
 8. If any required bootstrap file is missing or unreadable, stop and say the SecondBrain knowledge layer is unavailable.
-9. Compare the current template branch HEAD SHA to `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
+9. Compare the current fixed template main branch HEAD SHA to `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
 10. If different, follow `.secondbrain/TEMPLATE_SYNC.md` and sync only paths listed in `managed_paths`, unless the user explicitly asks to skip sync.
 11. Sync only template-managed files. Do not overwrite user data files, subject folders, `manifest.md`, or repository indexes unless explicitly instructed and confirmed.
 
