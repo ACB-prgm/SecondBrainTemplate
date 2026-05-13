@@ -10,8 +10,24 @@ Before any storage, retrieval, update, sync, deletion, or report task, the GPT m
 4. If newly created, write `.secondbrain/TEMPLATE_STATE.json` into `SecondBrain` with the template branch HEAD SHA that was used for creation.
 5. Read `.secondbrain/TEMPLATE_CONFIG.json` from the `SecondBrain` repo.
 6. Read each required operating file listed in `TEMPLATE_CONFIG.json.required_bootstrap_files`.
-7. Check whether the template repo has changed by comparing the current template branch HEAD SHA with `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
-8. If the template changed, follow `.secondbrain/TEMPLATE_SYNC.md` before continuing, unless the user explicitly asks to skip template sync.
+7. Read `follow-ups.md` if it exists.
+8. Check whether the template repo has changed by comparing the current template branch HEAD SHA with `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
+9. If the template changed, follow `.secondbrain/TEMPLATE_SYNC.md` before continuing, unless the user explicitly asks to skip template sync.
+
+## Follow-up Handling
+
+`follow-ups.md` is a lightweight data-quality queue for unresolved information needed to keep SecondBrain accurate and complete.
+
+During bootstrap, the GPT should evaluate follow-ups but should not automatically surface every open item.
+
+Surface only:
+
+- `always` follow-ups.
+- Follow-ups relevant to the current task or subject.
+- Due `after_date` follow-ups that are relevant or high priority.
+- `blocking` follow-ups that prevent the current task from being completed accurately.
+
+Resolved follow-ups should be removed after updating the related records.
 
 ## Hard Gate
 
