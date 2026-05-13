@@ -2,12 +2,8 @@ openapi: 3.1.0
 
 info:
   title: GitHub SecondBrain
-  version: 2.0.0
-  description: >
-    GitHub-backed storage action for a private repository named SecondBrain,
-    created from a public SecondBrain-Template repository. Uses the Git Database
-    API for raw text reads, direct tree-content writes, atomic commits, and
-    managed template sync based on the template branch HEAD SHA.
+  version: 2.1.0
+  description: GitHub-backed storage action for a private SecondBrain repository created from the public SecondBrainTemplate repository.
 
 servers:
   - url: https://api.github.com
@@ -21,7 +17,7 @@ components:
           authorizationUrl: https://github.com/login/oauth/authorize
           tokenUrl: https://github.com/login/oauth/access_token
           scopes:
-            repo: Full control of private repositories. This schema exposes only SecondBrain and SecondBrain-Template operations.
+            repo: Read and write the authenticated user's repositories. This schema exposes only SecondBrain and SecondBrainTemplate operations.
             read:user: Read authenticated user profile information.
 
   schemas:
@@ -34,7 +30,7 @@ components:
           const: SecondBrain
         owner:
           type: string
-          description: Optional target owner or organization. Omit to create under authenticated user.
+          description: Optional target owner or organization. Omit to create under the authenticated user.
         private:
           type: boolean
           const: true
@@ -59,9 +55,6 @@ components:
           maxItems: 10
           items:
             type: string
-          default:
-            - second-brain
-            - personal-knowledge
       required:
         - names
 
@@ -69,7 +62,7 @@ components:
       type: string
       minLength: 1
       maxLength: 500
-      pattern: '^(?!/)(?!.*(^|/)\.\.(?:/|$))(?!.*(^|/)\.git(?:/|$)).+$'
+      pattern: "^(?!/)(?!.*(^|/)\\.\\.(?:/|$))(?!.*(^|/)\\.git(?:/|$)).+$"
       description: Repository-relative path. Must not start with '/', contain '..', or target .git.
 
     CreateGitTreeRequest:
@@ -90,15 +83,13 @@ components:
                 $ref: '#/components/schemas/GitPath'
               mode:
                 type: string
-                enum:
-                  - '100644'
+                enum: ['100644']
               type:
                 type: string
-                enum:
-                  - blob
+                enum: [blob]
               content:
                 type: string
-                description: Raw UTF-8 file content for create/update operations.
+                description: Raw UTF-8 file content for create/update operations. Do not use with sha.
               sha:
                 type:
                   - string
@@ -149,8 +140,6 @@ components:
     GitRefResponse:
       type: object
       properties:
-        ref:
-          type: string
         object:
           type: object
           properties:
@@ -158,10 +147,8 @@ components:
               type: string
             type:
               type: string
-          required:
-            - sha
-      required:
-        - object
+          required: [sha]
+      required: [object]
 
     GitCommitResponse:
       type: object
@@ -173,15 +160,7 @@ components:
           properties:
             sha:
               type: string
-          required:
-            - sha
-        parents:
-          type: array
-          items:
-            type: object
-            properties:
-              sha:
-                type: string
+          required: [sha]
       required:
         - sha
         - tree
@@ -210,8 +189,7 @@ components:
                 type: integer
               url:
                 type: string
-      required:
-        - tree
+      required: [tree]
 
 security:
   - githubOAuth:
@@ -228,10 +206,10 @@ paths:
         '200':
           description: Authenticated user profile.
 
-  /repos/{template_owner}/SecondBrain-Template:
+  /repos/{template_owner}/SecondBrainTemplate:
     get:
       operationId: getSecondBrainTemplateRepo
-      summary: Get public SecondBrain-Template repository metadata
+      summary: Get public SecondBrainTemplate repository metadata
       x-openai-isConsequential: false
       parameters:
         - name: template_owner
@@ -247,15 +225,15 @@ paths:
             const: application/vnd.github+json
       responses:
         '200':
-          description: Template repository metadata. Check is_template when needed.
+          description: Template repository metadata.
         '404':
           description: Template repository not found.
 
-  /repos/{template_owner}/SecondBrain-Template/generate:
+  /repos/{template_owner}/SecondBrainTemplate/generate:
     post:
       operationId: createSecondBrainFromTemplate
       summary: Create private SecondBrain repo from public template
-      description: Creates a new private repository named SecondBrain from the default branch of SecondBrain-Template.
+      description: Creates a new private repository named SecondBrain from the default branch of SecondBrainTemplate. include_all_branches is forced false by schema.
       x-openai-isConsequential: true
       parameters:
         - name: template_owner
@@ -285,7 +263,7 @@ paths:
         '422':
           description: Validation failed or target repo already exists.
 
-  /repos/{template_owner}/SecondBrain-Template/git/ref/heads/{branch}:
+  /repos/{template_owner}/SecondBrainTemplate/git/ref/heads/{branch}:
     get:
       operationId: getTemplateBranchRef
       summary: Get template branch ref and HEAD SHA
@@ -318,7 +296,7 @@ paths:
         '404':
           description: Branch not found.
 
-  /repos/{template_owner}/SecondBrain-Template/git/commits/{commit_sha}:
+  /repos/{template_owner}/SecondBrainTemplate/git/commits/{commit_sha}:
     get:
       operationId: getTemplateGitCommit
       summary: Get template commit metadata
@@ -350,7 +328,7 @@ paths:
         '404':
           description: Commit not found.
 
-  /repos/{template_owner}/SecondBrain-Template/git/trees/{tree_sha}:
+  /repos/{template_owner}/SecondBrainTemplate/git/trees/{tree_sha}:
     get:
       operationId: getTemplateGitTree
       summary: Get template tree metadata
@@ -372,9 +350,7 @@ paths:
           required: false
           schema:
             type: string
-            enum:
-              - '1'
-              - 'true'
+            enum: ['1', 'true']
         - name: Accept
           in: header
           required: true
@@ -391,7 +367,7 @@ paths:
         '404':
           description: Tree not found.
 
-  /repos/{template_owner}/SecondBrain-Template/git/blobs/{blob_sha}:
+  /repos/{template_owner}/SecondBrainTemplate/git/blobs/{blob_sha}:
     get:
       operationId: getTemplateGitBlobRaw
       summary: Get raw template blob content
@@ -469,7 +445,6 @@ paths:
       responses:
         '200':
           description: Repository topics.
-
     put:
       operationId: setSecondBrainRepoTopics
       summary: Set SecondBrain repository topics
@@ -666,9 +641,7 @@ paths:
           required: false
           schema:
             type: string
-            enum:
-              - '1'
-              - 'true'
+            enum: ['1', 'true']
         - name: Accept
           in: header
           required: true
@@ -689,10 +662,7 @@ paths:
     post:
       operationId: createSecondBrainGitTree
       summary: Create a new SecondBrain tree for file creation, update, or deletion
-      description: >
-        Create a tree based on base_tree. Add/update text files by supplying
-        direct content. Delete files by setting sha to null. Directories are
-        implicit and exist only when files exist under their paths.
+      description: Add/update text files by supplying direct content. Delete files by setting sha to null.
       x-openai-isConsequential: true
       parameters:
         - name: owner
@@ -790,7 +760,6 @@ paths:
     patch:
       operationId: updateSecondBrainBranchRef
       summary: Move SecondBrain branch ref to a new commit
-      description: Updates the branch to point to a newly created commit. force must be false.
       x-openai-isConsequential: true
       parameters:
         - name: owner
