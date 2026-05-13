@@ -1,6 +1,6 @@
 # Repository Format
 
-SecondBrain uses an emergent subject-folder structure. It does not assume a fixed taxonomy.
+SecondBrain uses a flexible subject-folder structure. It does not assume a fixed taxonomy.
 
 ## Root Structure
 
@@ -14,11 +14,7 @@ Required root files and folders:
 
 ## Index Files
 
-- `index/files.json` tracks stored files, records, source artifacts, and companion notes.
-- `index/subjects.json` tracks top-level subject folders.
-- `index/entities.json` tracks durable entities such as people, organizations, properties, accounts, systems, vendors, and projects.
-- `index/tags.json` tracks cross-cutting tags.
-- `index/aliases.json` tracks alternate names, misspellings, nicknames, and retrieval phrases.
+The active index schema is defined by the current template and repository docs. Indexes are the machine-readable retrieval layer and should contain structured metadata and retrieval handles.
 
 ## Subject Folders
 
@@ -27,7 +23,7 @@ Create a top-level subject folder only when:
 1. The content does not clearly belong to an existing subject.
 2. The subject is durable and likely to receive future records.
 3. The subject can be described clearly in a `README.md`.
-4. Creating the folder improves retrieval clarity more than tags alone.
+4. Creating the folder improves retrieval clarity more than tags or aliases alone.
 
 Do not create a top-level folder for a one-off document unless it represents a recurring or durable subject area.
 
@@ -35,15 +31,30 @@ Do not create a top-level folder for a one-off document unless it represents a r
 
 Every top-level subject folder must contain `README.md` defining:
 
-- Purpose
-- What belongs here
-- What does not belong here
-- Expected structure
-- Canonical files
-- Naming conventions
-- Related subjects
+- Purpose of the directory.
+- Inclusion criteria: what belongs there.
+- Exclusion criteria: what should be stored elsewhere.
+- Expected structure and why that structure is used.
+- Canonical files and their roles.
+- Naming conventions.
+- Related subjects.
 
 Use `templates/subject_README.md` when creating a new subject.
+
+When placing information into an existing subject folder, first read that folder's `README.md` and follow its structure when reasonable. If the existing structure does not fit the new information, the model may revise the folder structure and update the README in the same commit. Any revision should keep the folder tight, efficient, and easy to retrieve from. Prefer small structural adjustments over unnecessary new subfolders or sprawling indexes.
+
+A subject README is not just documentation; it is the local contract for how that directory should be used.
+
+## Subfolders
+
+Create subfolders only when repeated record types, projects, events, or source groups justify them. Subfolders should inherit the subject README's rules unless their purpose becomes complex enough to require their own README.
+
+A subfolder should get its own `README.md` when:
+
+- It contains multiple files or recurring records.
+- Its inclusion/exclusion criteria are not obvious from the parent README.
+- It has a distinct internal structure.
+- It is likely to be retrieved or updated independently.
 
 ## Naming
 
@@ -56,4 +67,4 @@ Use `templates/subject_README.md` when creating a new subject.
 
 `manifest.md` is for quick human navigation. It should be concise.
 
-The JSON indexes are the machine-readable retrieval layer. They should contain structured metadata and retrieval handles.
+Indexes are for machine-readable retrieval. They should be accurate, compact, and aligned to the active repo format.
