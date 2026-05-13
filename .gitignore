@@ -7,6 +7,20 @@
 ._*
 .Spotlight-V100
 .Trashes
-
-# Optional: macOS folder metadata
 .fseventsd
+
+# Local/editor noise
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python/local tooling artifacts
+__pycache__/
+*.py[cod]
+.env
+.venv/
+venv/
+
+# OS/editor backups
+*~
