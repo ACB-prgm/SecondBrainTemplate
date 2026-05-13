@@ -1,0 +1,42 @@
+{
+  "template_name": "SecondBrain-Template",
+  "template_schema": "secondbrain-template-v1",
+  "template_branch": "main",
+  "required_bootstrap_files": [
+    ".secondbrain/BOOTSTRAP.md",
+    ".secondbrain/TEMPLATE_CONFIG.json",
+    ".secondbrain/OPERATING_MODEL.md",
+    ".secondbrain/REPO_FORMAT.md",
+    ".secondbrain/STORAGE_PRINCIPLES.md",
+    ".secondbrain/GITHUB_TOOL_WORKFLOWS.md",
+    ".secondbrain/RECORD_SCHEMAS.md",
+    ".secondbrain/TEMPLATE_SYNC.md"
+  ],
+  "managed_paths": [
+    ".secondbrain/BOOTSTRAP.md",
+    ".secondbrain/TEMPLATE_CONFIG.json",
+    ".secondbrain/OPERATING_MODEL.md",
+    ".secondbrain/REPO_FORMAT.md",
+    ".secondbrain/STORAGE_PRINCIPLES.md",
+    ".secondbrain/GITHUB_TOOL_WORKFLOWS.md",
+    ".secondbrain/RECORD_SCHEMAS.md",
+    ".secondbrain/TEMPLATE_SYNC.md",
+    "templates/subject_README.md",
+    "templates/record_note.md",
+    "templates/source_artifact_note.md"
+  ],
+  "user_managed_after_creation": [
+    "manifest.md",
+    "index/files.json",
+    "index/subjects.json",
+    "index/entities.json",
+    "index/tags.json",
+    "index/aliases.json",
+    "top-level subject folders"
+  ],
+  "state_file": ".secondbrain/TEMPLATE_STATE.json",
+  "notes": [
+    "Do not manually maintain a template version. The template branch HEAD commit SHA is the authoritative version.",
+    "TEMPLATE_STATE.json belongs only in generated/private SecondBrain repos, not in this template repo."
+  ]
+}
