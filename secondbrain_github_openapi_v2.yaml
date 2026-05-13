@@ -2,8 +2,12 @@ openapi: 3.1.0
 
 info:
   title: GitHub SecondBrain
-  version: 2.1.0
-  description: GitHub-backed storage action for a private SecondBrain repository created from the public SecondBrainTemplate repository.
+  version: 2.2.0
+  description: >
+    GitHub-backed storage action for a private repository named SecondBrain,
+    created from the fixed public template repository ACB-prgm/SecondBrainTemplate.
+    Uses GitHub's Git Database API for raw text reads, direct tree-content writes,
+    atomic commits, and managed template sync based on the template main branch HEAD SHA.
 
 servers:
   - url: https://api.github.com
@@ -17,7 +21,7 @@ components:
           authorizationUrl: https://github.com/login/oauth/authorize
           tokenUrl: https://github.com/login/oauth/access_token
           scopes:
-            repo: Read and write the authenticated user's repositories. This schema exposes only SecondBrain and SecondBrainTemplate operations.
+            repo: Read and write the authenticated user's repositories. This schema exposes the fixed ACB-prgm/SecondBrainTemplate repo and the authenticated user's SecondBrain repo.
             read:user: Read authenticated user profile information.
 
   schemas:
@@ -206,17 +210,12 @@ paths:
         '200':
           description: Authenticated user profile.
 
-  /repos/{template_owner}/SecondBrainTemplate:
+  /repos/ACB-prgm/SecondBrainTemplate:
     get:
       operationId: getSecondBrainTemplateRepo
-      summary: Get public SecondBrainTemplate repository metadata
+      summary: Get fixed public SecondBrainTemplate repository metadata
       x-openai-isConsequential: false
       parameters:
-        - name: template_owner
-          in: path
-          required: true
-          schema:
-            type: string
         - name: Accept
           in: header
           required: true
@@ -229,18 +228,13 @@ paths:
         '404':
           description: Template repository not found.
 
-  /repos/{template_owner}/SecondBrainTemplate/generate:
+  /repos/ACB-prgm/SecondBrainTemplate/generate:
     post:
       operationId: createSecondBrainFromTemplate
-      summary: Create private SecondBrain repo from public template
-      description: Creates a new private repository named SecondBrain from the default branch of SecondBrainTemplate. include_all_branches is forced false by schema.
+      summary: Create private SecondBrain repo from fixed public template
+      description: Creates a new private repository named SecondBrain from the default branch of ACB-prgm/SecondBrainTemplate. include_all_branches is forced false by schema.
       x-openai-isConsequential: true
       parameters:
-        - name: template_owner
-          in: path
-          required: true
-          schema:
-            type: string
         - name: Accept
           in: header
           required: true
@@ -263,23 +257,12 @@ paths:
         '422':
           description: Validation failed or target repo already exists.
 
-  /repos/{template_owner}/SecondBrainTemplate/git/ref/heads/{branch}:
+  /repos/ACB-prgm/SecondBrainTemplate/git/ref/heads/main:
     get:
-      operationId: getTemplateBranchRef
-      summary: Get template branch ref and HEAD SHA
+      operationId: getTemplateMainBranchRef
+      summary: Get fixed template main branch ref and HEAD SHA
       x-openai-isConsequential: false
       parameters:
-        - name: template_owner
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: branch
-          in: path
-          required: true
-          schema:
-            type: string
-            default: main
         - name: Accept
           in: header
           required: true
@@ -288,25 +271,20 @@ paths:
             const: application/vnd.github+json
       responses:
         '200':
-          description: Template branch ref.
+          description: Template main branch ref.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GitRefResponse'
         '404':
-          description: Branch not found.
+          description: Template main branch not found.
 
-  /repos/{template_owner}/SecondBrainTemplate/git/commits/{commit_sha}:
+  /repos/ACB-prgm/SecondBrainTemplate/git/commits/{commit_sha}:
     get:
       operationId: getTemplateGitCommit
-      summary: Get template commit metadata
+      summary: Get fixed template commit metadata
       x-openai-isConsequential: false
       parameters:
-        - name: template_owner
-          in: path
-          required: true
-          schema:
-            type: string
         - name: commit_sha
           in: path
           required: true
@@ -328,18 +306,13 @@ paths:
         '404':
           description: Commit not found.
 
-  /repos/{template_owner}/SecondBrainTemplate/git/trees/{tree_sha}:
+  /repos/ACB-prgm/SecondBrainTemplate/git/trees/{tree_sha}:
     get:
       operationId: getTemplateGitTree
-      summary: Get template tree metadata
+      summary: Get fixed template tree metadata
       description: Use recursive=1 to list all template files and blob SHAs.
       x-openai-isConsequential: false
       parameters:
-        - name: template_owner
-          in: path
-          required: true
-          schema:
-            type: string
         - name: tree_sha
           in: path
           required: true
@@ -367,17 +340,12 @@ paths:
         '404':
           description: Tree not found.
 
-  /repos/{template_owner}/SecondBrainTemplate/git/blobs/{blob_sha}:
+  /repos/ACB-prgm/SecondBrainTemplate/git/blobs/{blob_sha}:
     get:
       operationId: getTemplateGitBlobRaw
-      summary: Get raw template blob content
+      summary: Get raw fixed-template blob content
       x-openai-isConsequential: false
       parameters:
-        - name: template_owner
-          in: path
-          required: true
-          schema:
-            type: string
         - name: blob_sha
           in: path
           required: true
