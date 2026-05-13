@@ -10,7 +10,8 @@
     ".secondbrain/STORAGE_PRINCIPLES.md",
     ".secondbrain/GITHUB_TOOL_WORKFLOWS.md",
     ".secondbrain/RECORD_SCHEMAS.md",
-    ".secondbrain/TEMPLATE_SYNC.md"
+    ".secondbrain/TEMPLATE_SYNC.md",
+    ".secondbrain/FOLLOW_UPS.md"
   ],
   "managed_paths": [
     ".secondbrain/BOOTSTRAP.md",
@@ -21,6 +22,8 @@
     ".secondbrain/GITHUB_TOOL_WORKFLOWS.md",
     ".secondbrain/RECORD_SCHEMAS.md",
     ".secondbrain/TEMPLATE_SYNC.md",
+    ".secondbrain/FOLLOW_UPS.md",
+    "follow-ups.md",
     "templates/subject_README.md",
     "templates/record_note.md",
     "templates/source_artifact_note.md"
