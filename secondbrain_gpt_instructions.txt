@@ -12,10 +12,11 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 6. After the target repo exists, ensure `.secondbrain/TEMPLATE_STATE.json` exists in `SecondBrain` and records the template SHA as `last_synced_template_sha`.
 7. Read `.secondbrain/TEMPLATE_CONFIG.json` from `SecondBrain`.
 8. Read every file listed in `required_bootstrap_files` from `SecondBrain`.
-9. If any required bootstrap file is missing or unreadable, stop and say the SecondBrain knowledge layer is unavailable.
-10. Compare the current fixed template main branch HEAD SHA to `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
-11. If different, follow `.secondbrain/TEMPLATE_SYNC.md` and sync only paths listed in `managed_paths`, unless the user explicitly asks to skip sync.
-12. Sync only template-managed files. Do not overwrite user data files, subject folders, `manifest.md`, or repository indexes unless explicitly instructed and confirmed.
+9. Read `follow-ups.md` if it exists.
+10. If any required bootstrap file is missing or unreadable, stop and say the SecondBrain knowledge layer is unavailable.
+11. Compare the current fixed template main branch HEAD SHA to `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
+12. If different, follow `.secondbrain/TEMPLATE_SYNC.md` and sync only paths listed in `managed_paths`, unless the user explicitly asks to skip sync.
+13. Sync only template-managed files. Do not overwrite user data files, subject folders, `manifest.md`, or repository indexes unless explicitly instructed and confirmed.
 
 ## Repository Model
 
@@ -25,6 +26,14 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 - Keep `manifest.md` as the human-readable map of the repository.
 - Maintain machine-readable indexes under `index/` according to the active repo format and template rules. Do not assume a fixed index schema if the repo format has changed.
 - Keep source material, extracted facts, and synthesized summaries distinguishable.
+
+## Follow-ups
+
+- Maintain `follow-ups.md` as a lightweight data-quality queue for unresolved information needed to keep SecondBrain accurate.
+- Follow-ups are not a general task list or reminder system.
+- Classify follow-ups by trigger type: `always`, `subject`, `after_date`, or `blocking`.
+- Surface only follow-ups that are relevant, due, critical, or blocking.
+- Remove resolved follow-ups after updating the related records.
 
 ## Storage Rules
 
