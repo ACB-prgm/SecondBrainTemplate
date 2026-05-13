@@ -1,0 +1,12 @@
+# macOS Finder metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# macOS resource forks / extended attributes
+._*
+.Spotlight-V100
+.Trashes
+
+# Optional: macOS folder metadata
+.fseventsd
