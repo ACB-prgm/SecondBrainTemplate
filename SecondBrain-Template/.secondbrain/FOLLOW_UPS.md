@@ -12,7 +12,11 @@ The live queue is stored at the repository root:
 
 Keep the queue short. Remove items once resolved and update the related record in the same write whenever possible.
 
+Keep at most 15 active follow-ups. If a new follow-up would exceed 15, consolidate related items, remove stale items, or keep only the highest-value items.
+
 ## When to Create a Follow-up
+
+Create a follow-up only when the missing information is materially relevant to record accuracy, retrieval, future reporting, or a known unresolved outcome.
 
 Create a follow-up only when one of these is true:
 
@@ -23,7 +27,7 @@ Create a follow-up only when one of these is true:
 5. The model had to preserve uncertainty that should be resolved later.
 6. Missing information materially affects record accuracy, retrieval, or future reporting.
 
-Do not create speculative follow-ups or nice-to-have research tasks.
+Do not create speculative follow-ups, nice-to-have research tasks, or curiosity-driven questions.
 
 ## Trigger Types
 
@@ -31,19 +35,19 @@ Each follow-up must have exactly one trigger type.
 
 ### always
 
-Always include in the brief follow-up footer until resolved. Use only for critical gaps.
+Prioritize in the follow-up footer until resolved. Use only for critical gaps.
 
 ### subject
 
-Prioritize when the current task relates to the listed subject. May also appear in the footer if it is among the highest-priority active items.
+Use when the follow-up relates to a specific subject. Subject relevance should affect ordering, but subject-scoped follow-ups should still appear in the footer when there is room.
 
 ### after_date
 
-Eligible to surface only when the current date is on or after the listed date. This does not create an automatic reminder. It only makes the follow-up eligible during a future SecondBrain session.
+Use when the follow-up should not be acted on until a future date. This does not create an automatic reminder. It only affects priority/order during future SecondBrain sessions.
 
 ### blocking
 
-Surface when the missing information prevents the current task from being completed accurately. Blocking items should also be included in the footer while relevant.
+Use when the missing information prevents a task or record from being completed accurately.
 
 ## Queue Schema
 
@@ -59,7 +63,7 @@ Field guidance:
 - `Trigger`: one of `always`, `subject`, `after_date`, or `blocking`.
 - `Subject`: related top-level subject or blank if not subject-specific.
 - `After Date`: ISO date for `after_date` triggers, otherwise blank.
-- `Prompt`: concise question or request to ask the user.
+- `Prompt`: concise question to ask the user whenever possible.
 - `Reason`: why the information matters for accuracy or retrieval.
 - `Related Path`: most relevant file, folder, or intended location.
 - `Priority`: `low`, `medium`, or `high`.
@@ -68,19 +72,17 @@ Field guidance:
 
 During bootstrap, read `follow-ups.md` if it exists.
 
-At the end of every user-facing response, include a short follow-up footer when there are active follow-ups. Use the heading:
+At the end of every user-facing response, include a short follow-up footer when there are any active follow-ups. Use the heading:
 
-`Active follow-ups:`
+`Follow-ups (shown of total):`
 
 Footer rules:
 
-- Show at most 5 items.
-- Prefer high-priority items first.
-- Include all `always` items unless there are more than 5; if there are more than 5, show the 5 highest-priority/most relevant.
-- Include `blocking` items when they affect the current task.
-- Include `subject` items when the current task relates to that subject.
-- Include `after_date` items only when the current date is on or after the after date.
-- If there are no active follow-ups eligible for surfacing, omit the footer.
+- Always show active follow-ups when any exist, regardless of current subject relevance.
+- Show at most 15 follow-ups.
+- Phrase follow-up items as concise questions for the user whenever possible.
+- Prioritize `always`, `blocking`, due `after_date`, high-priority, and current-subject items, but include lower-priority items too when there is room.
+- If there are no active follow-ups, omit the follow-up section entirely.
 - Keep each item short, ideally under one line.
 - Do not derail the user's requested task unless the follow-up is blocking.
 
@@ -100,6 +102,7 @@ Resolved items should not accumulate in `follow-ups.md`. Git history is sufficie
 ## Maintenance Rules
 
 - Keep `follow-ups.md` small and current.
+- Keep at most 15 active follow-ups.
 - Prefer fewer high-value follow-ups over many low-value ones.
 - Do not use follow-ups for generic reminders or personal task management.
 - Do not create duplicate follow-ups for the same missing information.
