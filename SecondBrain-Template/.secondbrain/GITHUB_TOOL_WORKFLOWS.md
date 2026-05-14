@@ -21,6 +21,24 @@ SecondBrain uses GitHub's Git Database API rather than simple repository content
 
 The write is complete only after step 6 succeeds.
 
+## Template Sync Flow
+
+When syncing managed template files from `ACB-prgm/SecondBrainTemplate` into the private `SecondBrain` repo, do not copy template blob SHAs into the target repo tree.
+
+Template blob SHAs are references from the template repository context and must not be reused as blob references in the private target repo.
+
+Correct sync flow:
+
+1. Read the fixed template main branch ref.
+2. Read the template commit and recursive tree.
+3. For each managed template file that must be copied, fetch the template blob as raw content.
+4. Write that raw content into `SecondBrain` using tree entries with direct `content` fields.
+5. Update `.secondbrain/TEMPLATE_STATE.json` with the template main branch HEAD SHA.
+6. Create a new commit in `SecondBrain`.
+7. Update the `SecondBrain` branch ref with `force: false`.
+
+Never create a `SecondBrain` tree entry using a blob SHA from `SecondBrainTemplate`. This can fail with `422: tree.sha ... is not a valid blob` and may prevent template sync from completing.
+
 ## Delete File Flow
 
 Use the same write flow, but create a tree entry with:
