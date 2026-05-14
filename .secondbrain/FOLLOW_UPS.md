@@ -31,11 +31,11 @@ Each follow-up must have exactly one trigger type.
 
 ### always
 
-Surface at the start of every session until resolved. Use only for critical gaps.
+Always include in the brief follow-up footer until resolved. Use only for critical gaps.
 
 ### subject
 
-Surface only when the current task relates to the listed subject.
+Prioritize when the current task relates to the listed subject. May also appear in the footer if it is among the highest-priority active items.
 
 ### after_date
 
@@ -43,7 +43,7 @@ Eligible to surface only when the current date is on or after the listed date. T
 
 ### blocking
 
-Surface only when the missing information prevents the current task from being completed accurately.
+Surface when the missing information prevents the current task from being completed accurately. Blocking items should also be included in the footer while relevant.
 
 ## Queue Schema
 
@@ -66,16 +66,25 @@ Field guidance:
 
 ## Surfacing Rules
 
-During bootstrap, read `follow-ups.md` if it exists, but do not automatically present every open item.
+During bootstrap, read `follow-ups.md` if it exists.
 
-Surface only:
+At the end of every user-facing response, include a short follow-up footer when there are active follow-ups. Use the heading:
 
-- `always` follow-ups.
-- `subject` follow-ups when the current task relates to the subject.
-- `after_date` follow-ups when the date has passed and the item is relevant or high priority.
-- `blocking` follow-ups when they block the current task.
+`Active follow-ups:`
 
-When surfacing a follow-up, be concise. Do not derail the user's requested task unless the follow-up is blocking.
+Footer rules:
+
+- Show at most 5 items.
+- Prefer high-priority items first.
+- Include all `always` items unless there are more than 5; if there are more than 5, show the 5 highest-priority/most relevant.
+- Include `blocking` items when they affect the current task.
+- Include `subject` items when the current task relates to that subject.
+- Include `after_date` items only when the current date is on or after the after date.
+- If there are no active follow-ups eligible for surfacing, omit the footer.
+- Keep each item short, ideally under one line.
+- Do not derail the user's requested task unless the follow-up is blocking.
+
+The footer should be a brief status nudge, not a full task list or explanation.
 
 ## Resolution Rules
 
