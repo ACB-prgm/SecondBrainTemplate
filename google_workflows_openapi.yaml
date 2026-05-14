@@ -7,6 +7,7 @@ info:
     Basic Google Tasks and Google Calendar action schema for creating, reading,
     updating, and deleting todos, due-date reminders, and calendar events.
     Treat reminders as Google Tasks with due dates or Calendar events with event reminders.
+    SRC = https://github.com/ACB-prgm/SecondBrainTemplate/blob/dev/google_workflows_openapi.yaml
 
 servers:
   - url: https://www.googleapis.com
