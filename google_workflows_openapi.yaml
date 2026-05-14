@@ -2,11 +2,12 @@ openapi: 3.1.0
 
 info:
   title: Google Workflows for SecondBrain
-  version: 0.1.0
+  version: 0.2.0
   description: >
     Basic Google Tasks and Google Calendar action schema for creating, reading,
     updating, and deleting todos, due-date reminders, and calendar events.
     Treat reminders as Google Tasks with due dates or Calendar events with event reminders.
+    Default Google Tasks operations are hardcoded to @default to avoid missing path parameters.
     SRC = https://github.com/ACB-prgm/SecondBrainTemplate/blob/dev/google_workflows_openapi.yaml
 
 servers:
@@ -26,37 +27,6 @@ components:
             https://www.googleapis.com/auth/calendar.readonly: Read calendar lists and calendar metadata.
 
   schemas:
-    TaskList:
-      type: object
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-
-    Task:
-      type: object
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        notes:
-          type: string
-        status:
-          type: string
-          enum: [needsAction, completed]
-        due:
-          type: string
-          format: date-time
-          description: RFC3339 timestamp. Google Tasks stores due dates as dates; time may be discarded.
-        completed:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-
     TaskCreateRequest:
       type: object
       additionalProperties: false
@@ -87,18 +57,6 @@ components:
         status:
           type: string
           enum: [needsAction, completed]
-
-    CalendarListEntry:
-      type: object
-      properties:
-        id:
-          type: string
-        summary:
-          type: string
-        primary:
-          type: boolean
-        accessRole:
-          type: string
 
     EventDateTime:
       type: object
@@ -140,28 +98,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EventReminderOverride'
-
-    CalendarEvent:
-      type: object
-      properties:
-        id:
-          type: string
-        summary:
-          type: string
-        description:
-          type: string
-        location:
-          type: string
-        start:
-          $ref: '#/components/schemas/EventDateTime'
-        end:
-          $ref: '#/components/schemas/EventDateTime'
-        status:
-          type: string
-        htmlLink:
-          type: string
-        reminders:
-          $ref: '#/components/schemas/EventReminders'
 
     EventCreateRequest:
       type: object
@@ -236,10 +172,141 @@ paths:
         '200':
           description: Task lists.
 
+  /tasks/v1/lists/@default/tasks:
+    get:
+      operationId: listDefaultTasks
+      summary: List tasks from the default Google Tasks list
+      x-openai-isConsequential: false
+      parameters:
+        - name: showCompleted
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: showDeleted
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: dueMin
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: dueMax
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: maxResults
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: Tasks from the default task list.
+
+    post:
+      operationId: createDefaultTask
+      summary: Create a task or due-date reminder in the default Google Tasks list
+      description: Use for todos and reminders without a scheduled calendar time.
+      x-openai-isConsequential: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreateRequest'
+      responses:
+        '200':
+          description: Created task.
+
+  /tasks/v1/lists/@default/tasks/{task}:
+    get:
+      operationId: getDefaultTask
+      summary: Read one task from the default Google Tasks list
+      x-openai-isConsequential: false
+      parameters:
+        - name: task
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Task.
+
+    patch:
+      operationId: updateDefaultTask
+      summary: Edit a task in the default Google Tasks list
+      x-openai-isConsequential: true
+      parameters:
+        - name: task
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskPatchRequest'
+      responses:
+        '200':
+          description: Updated task.
+
+    delete:
+      operationId: deleteDefaultTask
+      summary: Delete a task from the default Google Tasks list
+      x-openai-isConsequential: true
+      parameters:
+        - name: task
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Task deleted.
+
+  /tasks/v1/lists/@default/tasks/{task}/move:
+    post:
+      operationId: moveDefaultTask
+      summary: Move a task within the default Google Tasks list
+      x-openai-isConsequential: true
+      parameters:
+        - name: task
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: parent
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: previous
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Moved task.
+
   /tasks/v1/lists/{tasklist}/tasks:
     get:
-      operationId: listTasks
-      summary: List tasks in a task list
+      operationId: listTasksInList
+      summary: List tasks in a specific task list
       x-openai-isConsequential: false
       parameters:
         - name: tasklist
@@ -247,7 +314,6 @@ paths:
           required: true
           schema:
             type: string
-            default: '@default'
         - name: showCompleted
           in: query
           required: false
@@ -285,9 +351,8 @@ paths:
           description: Tasks.
 
     post:
-      operationId: createTask
-      summary: Create a task or due-date reminder
-      description: Use for todos and reminders without a scheduled calendar time.
+      operationId: createTaskInList
+      summary: Create a task in a specific task list
       x-openai-isConsequential: true
       parameters:
         - name: tasklist
@@ -295,7 +360,6 @@ paths:
           required: true
           schema:
             type: string
-            default: '@default'
       requestBody:
         required: true
         content:
@@ -305,104 +369,6 @@ paths:
       responses:
         '200':
           description: Created task.
-
-  /tasks/v1/lists/{tasklist}/tasks/{task}:
-    get:
-      operationId: getTask
-      summary: Read one task
-      x-openai-isConsequential: false
-      parameters:
-        - name: tasklist
-          in: path
-          required: true
-          schema:
-            type: string
-            default: '@default'
-        - name: task
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Task.
-
-    patch:
-      operationId: updateTask
-      summary: Edit a task
-      x-openai-isConsequential: true
-      parameters:
-        - name: tasklist
-          in: path
-          required: true
-          schema:
-            type: string
-            default: '@default'
-        - name: task
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TaskPatchRequest'
-      responses:
-        '200':
-          description: Updated task.
-
-    delete:
-      operationId: deleteTask
-      summary: Delete a task
-      x-openai-isConsequential: true
-      parameters:
-        - name: tasklist
-          in: path
-          required: true
-          schema:
-            type: string
-            default: '@default'
-        - name: task
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: Task deleted.
-
-  /tasks/v1/lists/{tasklist}/tasks/{task}/move:
-    post:
-      operationId: moveTask
-      summary: Move a task within a list
-      x-openai-isConsequential: true
-      parameters:
-        - name: tasklist
-          in: path
-          required: true
-          schema:
-            type: string
-            default: '@default'
-        - name: task
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: parent
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: previous
-          in: query
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Moved task.
 
   /calendar/v3/users/me/calendarList:
     get:
@@ -428,18 +394,12 @@ paths:
         '200':
           description: Calendar list.
 
-  /calendar/v3/calendars/{calendarId}/events:
+  /calendar/v3/calendars/primary/events:
     get:
-      operationId: listCalendarEvents
-      summary: List calendar events
+      operationId: listPrimaryCalendarEvents
+      summary: List events from the primary calendar
       x-openai-isConsequential: false
       parameters:
-        - name: calendarId
-          in: path
-          required: true
-          schema:
-            type: string
-            default: primary
         - name: timeMin
           in: query
           required: false
@@ -483,17 +443,10 @@ paths:
           description: Events.
 
     post:
-      operationId: createCalendarEvent
-      summary: Create a calendar event or timed reminder
-      description: Use for scheduled events, appointments, meetings, and timed or recurring reminders.
+      operationId: createPrimaryCalendarEvent
+      summary: Create an event or timed reminder on the primary calendar
       x-openai-isConsequential: true
       parameters:
-        - name: calendarId
-          in: path
-          required: true
-          schema:
-            type: string
-            default: primary
         - name: sendUpdates
           in: query
           required: false
@@ -511,18 +464,12 @@ paths:
         '200':
           description: Created event.
 
-  /calendar/v3/calendars/{calendarId}/events/{eventId}:
+  /calendar/v3/calendars/primary/events/{eventId}:
     get:
-      operationId: getCalendarEvent
-      summary: Read one calendar event
+      operationId: getPrimaryCalendarEvent
+      summary: Read one event from the primary calendar
       x-openai-isConsequential: false
       parameters:
-        - name: calendarId
-          in: path
-          required: true
-          schema:
-            type: string
-            default: primary
         - name: eventId
           in: path
           required: true
@@ -533,16 +480,10 @@ paths:
           description: Calendar event.
 
     patch:
-      operationId: updateCalendarEvent
-      summary: Edit a calendar event
+      operationId: updatePrimaryCalendarEvent
+      summary: Edit an event on the primary calendar
       x-openai-isConsequential: true
       parameters:
-        - name: calendarId
-          in: path
-          required: true
-          schema:
-            type: string
-            default: primary
         - name: eventId
           in: path
           required: true
@@ -566,16 +507,10 @@ paths:
           description: Updated event.
 
     delete:
-      operationId: deleteCalendarEvent
-      summary: Delete a calendar event
+      operationId: deletePrimaryCalendarEvent
+      summary: Delete an event from the primary calendar
       x-openai-isConsequential: true
       parameters:
-        - name: calendarId
-          in: path
-          required: true
-          schema:
-            type: string
-            default: primary
         - name: eventId
           in: path
           required: true
