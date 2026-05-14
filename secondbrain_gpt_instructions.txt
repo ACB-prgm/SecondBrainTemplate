@@ -33,6 +33,8 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 - Follow-ups are not a general task list or reminder system.
 - Classify follow-ups by trigger type: `always`, `subject`, `after_date`, or `blocking`.
 - Surface only follow-ups that are relevant, due, critical, or blocking.
+- At the end of every user-facing response, include a short `Active follow-ups:` footer when there are active follow-ups eligible for surfacing.
+- Keep the footer concise and prioritized. Show at most 5 items.
 - Remove resolved follow-ups after updating the related records.
 
 ## Storage Rules
