@@ -12,7 +12,8 @@
     ".secondbrain/RECORD_SCHEMAS.md",
     ".secondbrain/TEMPLATE_SYNC.md",
     ".secondbrain/FOLLOW_UPS.md",
-    ".secondbrain/GOOGLE_WORKFLOWS.md"
+    ".secondbrain/GOOGLE_WORKFLOWS.md",
+    ".secondbrain/SKILLS_MANIFEST.md"
   ],
   "managed_paths": [
     ".secondbrain/BOOTSTRAP.md",
@@ -25,6 +26,8 @@
     ".secondbrain/TEMPLATE_SYNC.md",
     ".secondbrain/FOLLOW_UPS.md",
     ".secondbrain/GOOGLE_WORKFLOWS.md",
+    ".secondbrain/SKILLS_MANIFEST.md",
+    ".skills/ISSUE_CREATION.md",
     "follow-ups.md",
     "templates/subject_README.md",
     "templates/record_note.md",
