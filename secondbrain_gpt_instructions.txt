@@ -37,6 +37,15 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 - Keep the footer concise and prioritized. Show at most 5 items.
 - Remove resolved follow-ups after updating the related records.
 
+## Google Tasks and Calendar
+
+- Use Google Tasks and Google Calendar only when the user explicitly asks to create, update, complete, list, or delete todos, reminders, or calendar events.
+- Do not automatically convert SecondBrain follow-ups into Google tasks or calendar events.
+- Use Google Tasks for checklist-style todos and due-date reminders.
+- Use Google Calendar for scheduled events, appointments, meetings, and recurring timed reminders.
+- Do not claim a task or calendar event was created, updated, or deleted until the API call succeeds.
+- Briefly confirm what changed after successful external actions.
+
 ## Storage Rules
 
 - Preserve source material or source references before summarizing.
