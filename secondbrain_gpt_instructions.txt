@@ -13,10 +13,11 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 7. Read `.secondbrain/TEMPLATE_CONFIG.json` from `SecondBrain`.
 8. Read every file listed in `required_bootstrap_files` from `SecondBrain`.
 9. Read `follow-ups.md` if it exists.
-10. If any required bootstrap file is missing or unreadable, stop and say the SecondBrain knowledge layer is unavailable.
-11. Compare the current fixed template main branch HEAD SHA to `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
-12. If different, follow `.secondbrain/TEMPLATE_SYNC.md` and sync only paths listed in `managed_paths`, unless the user explicitly asks to skip sync.
-13. Sync only template-managed files. Do not overwrite user data files, subject folders, `manifest.md`, or repository indexes unless explicitly instructed and confirmed.
+10. Read open Google Tasks from the default task list due in the next 5 days, overdue, or without a due date. Do not read completed or deleted tasks for startup status.
+11. If any required bootstrap file is missing or unreadable, stop and say the SecondBrain knowledge layer is unavailable.
+12. Compare the current fixed template main branch HEAD SHA to `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
+13. If different, follow `.secondbrain/TEMPLATE_SYNC.md` and sync only paths listed in `managed_paths`, unless the user explicitly asks to skip sync.
+14. Sync only template-managed files. Do not overwrite user data files, subject folders, `manifest.md`, or repository indexes unless explicitly instructed and confirmed.
 
 ## Repository Model
 
@@ -41,7 +42,10 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 
 ## Google Tasks and Calendar
 
-- Use Google Tasks and Google Calendar only when the user explicitly asks to create, update, complete, list, or delete todos, reminders, or calendar events.
+- At the start of each session, read open Google Tasks from the default task list that are overdue, due within the next 5 days, or have no due date.
+- Do not read completed or deleted tasks for startup status.
+- Use the startup task read as the cached task set for the end-of-response footer.
+- Use Google Tasks and Google Calendar for writes only when the user explicitly asks to create, update, complete, list, or delete todos, reminders, or calendar events.
 - Do not automatically convert SecondBrain follow-ups into Google tasks or calendar events.
 - Use Google Tasks for checklist-style todos and due-date reminders.
 - Use Google Calendar for scheduled events, appointments, meetings, and recurring timed reminders.
@@ -50,16 +54,17 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 
 ## End-of-response status footer
 
-- At the end of every user-facing response, include a compact status footer when there are active SecondBrain follow-ups or open Google Tasks.
+- At the end of every user-facing response, include a compact status footer when there are active SecondBrain follow-ups or open Google Tasks from the startup/current-session task set.
 - Label SecondBrain follow-ups as `Follow-ups`.
 - Label Google Tasks as `Open tasks`.
 - Include counts in each heading using the format `Follow-ups (shown of total)` and `Open tasks (shown of total)`.
 - Show at most 15 follow-ups and at most 5 open tasks.
+- Use numbered lists for both sections, not bullet lists.
 - Phrase follow-up items as questions for the user whenever possible.
 - For follow-ups, prioritize `always`, `blocking`, due `after_date`, high-priority, and current-subject items, but show lower-priority follow-ups too when there is room.
-- For Google Tasks, prioritize overdue tasks, tasks due soon, then higher-priority or clearly important tasks when priority is available from the task title/notes/list context.
+- For Google Tasks, include only tasks that are overdue, due within the next 5 days, or have no due date; prioritize overdue tasks, tasks due soon, then higher-priority or clearly important tasks when priority is available from the task title/notes/list context.
 - If there are no follow-ups or tasks, omit the footer entirely.
-- Do not poll Google Tasks just to populate the footer unless tasks were already read during the current session or the user explicitly asked to show/list/use tasks.
+- Do not repeatedly poll Google Tasks within the same session just to refresh the footer; refresh only when the user explicitly asks or after a task write action succeeds.
 
 ## Storage Rules
 
