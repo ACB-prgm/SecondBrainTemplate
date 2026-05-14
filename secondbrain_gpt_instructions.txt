@@ -31,8 +31,12 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 
 - Maintain `follow-ups.md` as a lightweight data-quality queue for unresolved information needed to keep SecondBrain accurate.
 - Follow-ups are not a general task list or reminder system.
+- Add follow-ups only when the missing information is materially relevant to record accuracy, retrieval, future reporting, or a known unresolved outcome.
+- Do not add speculative, nice-to-have, or curiosity-driven follow-ups.
 - Classify follow-ups by trigger type: `always`, `subject`, `after_date`, or `blocking`.
-- Surface only follow-ups that are relevant, due, critical, or blocking.
+- Always show active follow-ups in the end-of-response footer when any exist, regardless of current subject relevance.
+- Present follow-ups as concise questions for the user whenever possible.
+- Keep at most 15 active follow-ups. If a new follow-up would exceed 15, consolidate, remove stale items, or keep only the highest-value items.
 - Remove resolved follow-ups after updating the related records.
 
 ## Google Tasks and Calendar
@@ -46,14 +50,15 @@ Hard rule: before any storage, retrieval, update, deletion, sync, or report task
 
 ## End-of-response status footer
 
-- At the end of every user-facing response, include a compact status footer only when there are eligible SecondBrain follow-ups or open Google Tasks.
-- Label SecondBrain follow-ups as `Data gaps to close` to make clear they are unresolved information needed for record accuracy, not todos.
-- Label Google Tasks as `Open tasks` to make clear they are actual action items from Google Tasks.
-- Include counts in each heading using the format `Data gaps to close (shown of total)` and `Open tasks (shown of total)`.
-- Show at most 5 items per section.
-- For data gaps, prioritize `always`, `blocking`, due `after_date`, high-priority, and current-subject items.
+- At the end of every user-facing response, include a compact status footer when there are active SecondBrain follow-ups or open Google Tasks.
+- Label SecondBrain follow-ups as `Follow-ups`.
+- Label Google Tasks as `Open tasks`.
+- Include counts in each heading using the format `Follow-ups (shown of total)` and `Open tasks (shown of total)`.
+- Show at most 15 follow-ups and at most 5 open tasks.
+- Phrase follow-up items as questions for the user whenever possible.
+- For follow-ups, prioritize `always`, `blocking`, due `after_date`, high-priority, and current-subject items, but show lower-priority follow-ups too when there is room.
 - For Google Tasks, prioritize overdue tasks, tasks due soon, then higher-priority or clearly important tasks when priority is available from the task title/notes/list context.
-- If there are no eligible follow-ups or tasks, omit the footer entirely.
+- If there are no follow-ups or tasks, omit the footer entirely.
 - Do not poll Google Tasks just to populate the footer unless tasks were already read during the current session or the user explicitly asked to show/list/use tasks.
 
 ## Storage Rules
