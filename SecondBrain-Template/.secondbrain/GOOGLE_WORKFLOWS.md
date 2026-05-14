@@ -77,11 +77,23 @@ After success, briefly confirm:
 - date/time or due date when relevant,
 - and any important destination such as task list or calendar.
 
-## Optional SecondBrain Cross-Links
+## SecondBrain Cross-Links
 
-If useful, store external Google IDs or links in the relevant SecondBrain record, but do not clutter records by default.
+When creating a Google Task or Calendar event from a specific SecondBrain record, include a short SecondBrain reference path or retrieval handle in the task notes or event description.
 
-Examples:
+Example task note:
+
+```text
+Related SecondBrain record:
+health/visits/2026-05-13-primary-care-visit-summary.md
+
+Context:
+Follow up on MRI/MRA order from visit summary.
+```
+
+Do not add SecondBrain references to generic tasks unless they improve retrieval, context, auditability, or future updates.
+
+If useful, also store external Google IDs or links in the related SecondBrain record. Examples:
 
 - Google Task ID
 - Google Calendar Event ID
