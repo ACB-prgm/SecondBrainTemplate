@@ -1,0 +1,592 @@
+openapi: 3.1.0
+
+info:
+  title: Google Workflows for SecondBrain
+  version: 0.1.0
+  description: >
+    Basic Google Tasks and Google Calendar action schema for creating, reading,
+    updating, and deleting todos, due-date reminders, and calendar events.
+    Treat reminders as Google Tasks with due dates or Calendar events with event reminders.
+
+servers:
+  - url: https://www.googleapis.com
+
+components:
+  securitySchemes:
+    googleOAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/tasks: Create, read, update, and delete Google Tasks.
+            https://www.googleapis.com/auth/calendar.events: Create, read, update, and delete Google Calendar events.
+            https://www.googleapis.com/auth/calendar.readonly: Read calendar lists and calendar metadata.
+
+  schemas:
+    TaskList:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        notes:
+          type: string
+        status:
+          type: string
+          enum: [needsAction, completed]
+        due:
+          type: string
+          format: date-time
+          description: RFC3339 timestamp. Google Tasks stores due dates as dates; time may be discarded.
+        completed:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+
+    TaskCreateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          minLength: 1
+        notes:
+          type: string
+        due:
+          type: string
+          format: date-time
+          description: Optional due date/reminder date as RFC3339 timestamp.
+      required:
+        - title
+
+    TaskPatchRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+        notes:
+          type: string
+        due:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [needsAction, completed]
+
+    CalendarListEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        summary:
+          type: string
+        primary:
+          type: boolean
+        accessRole:
+          type: string
+
+    EventDateTime:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+          format: date
+          description: Use for all-day events.
+        dateTime:
+          type: string
+          format: date-time
+          description: Use for timed events.
+        timeZone:
+          type: string
+          description: IANA time zone, such as America/Los_Angeles.
+
+    EventReminderOverride:
+      type: object
+      additionalProperties: false
+      properties:
+        method:
+          type: string
+          enum: [email, popup]
+        minutes:
+          type: integer
+          minimum: 0
+      required:
+        - method
+        - minutes
+
+    EventReminders:
+      type: object
+      additionalProperties: false
+      properties:
+        useDefault:
+          type: boolean
+        overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventReminderOverride'
+
+    CalendarEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        start:
+          $ref: '#/components/schemas/EventDateTime'
+        end:
+          $ref: '#/components/schemas/EventDateTime'
+        status:
+          type: string
+        htmlLink:
+          type: string
+        reminders:
+          $ref: '#/components/schemas/EventReminders'
+
+    EventCreateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        summary:
+          type: string
+          minLength: 1
+        description:
+          type: string
+        location:
+          type: string
+        start:
+          $ref: '#/components/schemas/EventDateTime'
+        end:
+          $ref: '#/components/schemas/EventDateTime'
+        reminders:
+          $ref: '#/components/schemas/EventReminders'
+        recurrence:
+          type: array
+          description: RFC5545 recurrence lines, e.g. RRULE:FREQ=WEEKLY;BYDAY=MO.
+          items:
+            type: string
+      required:
+        - summary
+        - start
+        - end
+
+    EventPatchRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        summary:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        start:
+          $ref: '#/components/schemas/EventDateTime'
+        end:
+          $ref: '#/components/schemas/EventDateTime'
+        reminders:
+          $ref: '#/components/schemas/EventReminders'
+        recurrence:
+          type: array
+          items:
+            type: string
+
+security:
+  - googleOAuth:
+      - https://www.googleapis.com/auth/tasks
+      - https://www.googleapis.com/auth/calendar.events
+      - https://www.googleapis.com/auth/calendar.readonly
+
+paths:
+  /tasks/v1/users/@me/lists:
+    get:
+      operationId: listTaskLists
+      summary: List Google Task lists
+      x-openai-isConsequential: false
+      parameters:
+        - name: maxResults
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: Task lists.
+
+  /tasks/v1/lists/{tasklist}/tasks:
+    get:
+      operationId: listTasks
+      summary: List tasks in a task list
+      x-openai-isConsequential: false
+      parameters:
+        - name: tasklist
+          in: path
+          required: true
+          schema:
+            type: string
+            default: '@default'
+        - name: showCompleted
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: showDeleted
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: dueMin
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: dueMax
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: maxResults
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: Tasks.
+
+    post:
+      operationId: createTask
+      summary: Create a task or due-date reminder
+      description: Use for todos and reminders without a scheduled calendar time.
+      x-openai-isConsequential: true
+      parameters:
+        - name: tasklist
+          in: path
+          required: true
+          schema:
+            type: string
+            default: '@default'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreateRequest'
+      responses:
+        '200':
+          description: Created task.
+
+  /tasks/v1/lists/{tasklist}/tasks/{task}:
+    get:
+      operationId: getTask
+      summary: Read one task
+      x-openai-isConsequential: false
+      parameters:
+        - name: tasklist
+          in: path
+          required: true
+          schema:
+            type: string
+            default: '@default'
+        - name: task
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Task.
+
+    patch:
+      operationId: updateTask
+      summary: Edit a task
+      x-openai-isConsequential: true
+      parameters:
+        - name: tasklist
+          in: path
+          required: true
+          schema:
+            type: string
+            default: '@default'
+        - name: task
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskPatchRequest'
+      responses:
+        '200':
+          description: Updated task.
+
+    delete:
+      operationId: deleteTask
+      summary: Delete a task
+      x-openai-isConsequential: true
+      parameters:
+        - name: tasklist
+          in: path
+          required: true
+          schema:
+            type: string
+            default: '@default'
+        - name: task
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Task deleted.
+
+  /tasks/v1/lists/{tasklist}/tasks/{task}/move:
+    post:
+      operationId: moveTask
+      summary: Move a task within a list
+      x-openai-isConsequential: true
+      parameters:
+        - name: tasklist
+          in: path
+          required: true
+          schema:
+            type: string
+            default: '@default'
+        - name: task
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: parent
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: previous
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Moved task.
+
+  /calendar/v3/users/me/calendarList:
+    get:
+      operationId: listCalendars
+      summary: List calendars
+      x-openai-isConsequential: false
+      parameters:
+        - name: minAccessRole
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [freeBusyReader, reader, writer, owner]
+        - name: maxResults
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 250
+            default: 50
+      responses:
+        '200':
+          description: Calendar list.
+
+  /calendar/v3/calendars/{calendarId}/events:
+    get:
+      operationId: listCalendarEvents
+      summary: List calendar events
+      x-openai-isConsequential: false
+      parameters:
+        - name: calendarId
+          in: path
+          required: true
+          schema:
+            type: string
+            default: primary
+        - name: timeMin
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: timeMax
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: singleEvents
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: true
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [startTime, updated]
+            default: startTime
+        - name: maxResults
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 250
+            default: 20
+      responses:
+        '200':
+          description: Events.
+
+    post:
+      operationId: createCalendarEvent
+      summary: Create a calendar event or timed reminder
+      description: Use for scheduled events, appointments, meetings, and timed or recurring reminders.
+      x-openai-isConsequential: true
+      parameters:
+        - name: calendarId
+          in: path
+          required: true
+          schema:
+            type: string
+            default: primary
+        - name: sendUpdates
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [all, externalOnly, none]
+            default: none
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventCreateRequest'
+      responses:
+        '200':
+          description: Created event.
+
+  /calendar/v3/calendars/{calendarId}/events/{eventId}:
+    get:
+      operationId: getCalendarEvent
+      summary: Read one calendar event
+      x-openai-isConsequential: false
+      parameters:
+        - name: calendarId
+          in: path
+          required: true
+          schema:
+            type: string
+            default: primary
+        - name: eventId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Calendar event.
+
+    patch:
+      operationId: updateCalendarEvent
+      summary: Edit a calendar event
+      x-openai-isConsequential: true
+      parameters:
+        - name: calendarId
+          in: path
+          required: true
+          schema:
+            type: string
+            default: primary
+        - name: eventId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: sendUpdates
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [all, externalOnly, none]
+            default: none
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventPatchRequest'
+      responses:
+        '200':
+          description: Updated event.
+
+    delete:
+      operationId: deleteCalendarEvent
+      summary: Delete a calendar event
+      x-openai-isConsequential: true
+      parameters:
+        - name: calendarId
+          in: path
+          required: true
+          schema:
+            type: string
+            default: primary
+        - name: eventId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: sendUpdates
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [all, externalOnly, none]
+            default: none
+      responses:
+        '204':
+          description: Event deleted.
