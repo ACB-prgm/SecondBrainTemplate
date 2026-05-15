@@ -14,6 +14,17 @@ Before any storage, retrieval, update, sync, deletion, or report task, establish
 8. Check whether the template repo has changed by comparing the current template branch HEAD SHA with `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
 9. If the template changed, follow `.secondbrain/TEMPLATE_SYNC.md` before continuing, unless the user explicitly asks to skip template sync.
 
+## User Preferences
+
+`USER_PREFS.md` stores durable user preferences that affect how SecondBrain should organize, summarize, retrieve, or act.
+
+Do not add preferences automatically. Update preferences only when:
+
+- the user explicitly asks, or
+- the model asks whether a durable preference should be saved and the user agrees.
+
+Keep preferences concise and remove stale or superseded entries.
+
 ## Follow-ups
 
 Follow-up rules live in `.secondbrain/FOLLOW_UPS.md`. Read `follow-ups.md` during bootstrap and remove resolved items only after updating the related record.
