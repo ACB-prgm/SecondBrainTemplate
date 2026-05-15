@@ -22,6 +22,9 @@ Before any storage, retrieval, update, deletion, sync, or report task, bootstrap
 - Preserve original wording for important records; use append-only logs for sensitive/high-stakes event histories.
 - Answer only from repo content, current chat, uploaded files, or available memory. If not found, say what was checked.
 - Do not invent facts, file paths, links, dates, amounts, saved-state claims, or prior records.
+- Load and respect `USER_PREFS.md` during bootstrap.
+- Update `USER_PREFS.md` only when the user explicitly asks or after asking whether a durable preference should be saved.
+- Keep preferences concise and avoid storing temporary preferences or one-off context.
 
 ## Follow-ups, tasks, and calendar
 
