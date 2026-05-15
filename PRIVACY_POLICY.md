@@ -1,43 +1,80 @@
 # Privacy Policy
 
-SecondBrain is a user-controlled personal knowledge repository template. It is designed to store structured notes, indexes, summaries, and references to source files in a GitHub repository owned by the user.
+SecondBrain is a user-controlled personal knowledge system backed by a private GitHub repository named `SecondBrain`. It stores structured notes, indexes, summaries, source references, preferences, follow-ups, and optional links to external action systems such as Google Tasks, Google Calendar, and Google Sheets.
 
 ## Data Stored
 
-SecondBrain may store information that the user explicitly chooses to save, including notes, summaries, metadata, file references, indexes, and repository operating files.
+SecondBrain may store information the user chooses to save, including:
 
-The template does not require storing source documents directly in GitHub. Large files, scans, images, PDFs, spreadsheets, or other artifacts may be stored elsewhere and referenced from companion notes when appropriate.
+- notes, summaries, records, logs, and indexes
+- source references and companion notes for files stored elsewhere
+- user preferences in `USER_PREFS.md`
+- data-quality follow-ups in `follow-ups.md`
+- template operating files under `.secondbrain/`
+- optional skill files under `.skills/`
+- optional references to Google Task IDs, Calendar event IDs, Calendar links, or Google Sheets IDs/links when useful
+
+The template does not require storing large source documents directly in GitHub. PDFs, scans, images, spreadsheets, or other artifacts may be stored elsewhere and referenced from companion notes.
 
 ## User Control
 
-The user controls the GitHub repository used by SecondBrain. The user is responsible for deciding what information to store, update, remove, or share.
+The user controls the private `SecondBrain` repository and decides what to store, update, remove, or share.
 
-SecondBrain should not claim that information has been saved unless the GitHub write operation has completed successfully.
+SecondBrain should not claim that information has been saved, deleted, synced, or externally updated unless the relevant GitHub or Google API operation succeeds.
 
-## Access
+`USER_PREFS.md` is intended for durable behavioral preferences only. It should be updated only when the user explicitly asks or after the user agrees to save a proposed preference.
 
-Access to repository data depends on the permissions granted by the user through GitHub authentication and the visibility of the repository. A private `SecondBrain` repository should be used for personal data.
+`follow-ups.md` is intended for unresolved information needed for SecondBrain accuracy. It is not a general task list.
 
-The public `SecondBrainTemplate` repository contains only template files, operating instructions, schemas, and scaffolding. It should not contain user-specific personal data.
+## GitHub Access
+
+The GitHub action uses OAuth scopes that allow repository access and user-profile lookup. It is designed to operate on:
+
+- the user's private `SecondBrain` repository
+- the public template/development repository `ACB-prgm/SecondBrainTemplate`
+
+The public template repository should contain only template files, operating instructions, OpenAPI schemas, optional skills, privacy policy text, and scaffolding. It should not contain user-specific personal data.
+
+Because Git preserves history, deleting a file from the current branch may not remove it from prior commits. Users who need permanent removal from Git history should use GitHub-supported history rewriting or repository deletion workflows.
+
+## Google Access
+
+If enabled, SecondBrain may use Google APIs for action management or tabular storage:
+
+- Google Tasks for todos and due-date reminders
+- Google Calendar for appointments, meetings, scheduled events, and timed reminders
+- Google Sheets for optional scalable tabular datasets, such as expenses, transactions, budgets, inventory, logs, or recurring measurements
+
+Google Tasks and Calendar entries may include short references back to related SecondBrain records when that improves context, retrieval, or auditability.
+
+Google Sheets is optional and should be used only when the Tabular Storage skill determines that a dataset is naturally tabular and likely to grow or need sorting, filtering, formulas, repeated row updates, or column summaries. GitHub remains the context and source-of-truth layer; Sheets stores rows.
+
+Google API data is handled by Google under Google's terms and privacy policies. Access depends on the OAuth scopes granted by the user.
+
+## Template Sync and User-Managed Files
+
+Template sync should update only template-managed files.
+
+It must not overwrite user data, subject folders, manifests, indexes, `USER_PREFS.md`, or `follow-ups.md` after creation unless the user explicitly instructs and confirms that action.
+
+`USER_PREFS.md` and `follow-ups.md` may be read during bootstrap but are user-managed after creation.
+
+## Optional Skills and Issues
+
+SecondBrain may load optional skill files from `.skills/` only when the user asks for that workflow or the current task clearly requires it.
+
+The Bug Reporting skill may create or update issues in `ACB-prgm/SecondBrainTemplate` for SecondBrain system defects, schema issues, workflow bugs, or maintenance improvements. Personal user records, health information, insurance information, HOA matters, ordinary todos, and private source material should not be filed as public template issues.
 
 ## Sensitive Information
 
-Users should avoid storing credentials, private keys, access tokens, passwords, recovery phrases, or other secrets in the repository.
+Users should avoid storing credentials, private keys, access tokens, passwords, recovery phrases, or other secrets in SecondBrain, Google Tasks, Calendar events, or Sheets.
 
-For important personal records, SecondBrain should preserve source wording or source references and distinguish raw/source material, extracted facts, and synthesized summaries.
+For sensitive records such as health, legal, financial, insurance, tax, identity, or employment data, SecondBrain should preserve source wording or source references and distinguish raw/source material, extracted facts, and synthesized summaries.
 
 ## Third-Party Services
 
-SecondBrain may reference or interact with third-party services such as GitHub or external file storage systems when the user enables those tools. Data handling by those services is governed by their own terms and privacy policies.
-
-## Deletion
-
-Users may delete files, records, or the entire repository through GitHub. Because Git repositories maintain history, deleting a file from the current branch may not remove it from prior commits. Users who need permanent removal from Git history should use GitHub-supported history rewriting or repository deletion workflows.
-
-## Template Updates
-
-Template sync should update only template-managed files. It should not overwrite user data, subject folders, manifests, or indexes unless the user explicitly instructs and confirms that action.
+SecondBrain can interact with third-party services such as GitHub and Google only when the user enables the relevant actions and grants OAuth permissions. Data handling by those services is governed by their own terms and privacy policies.
 
 ## Contact
 
-This template is maintained in the public repository `ACB-prgm/SecondBrainTemplate`. Issues or change requests can be managed through that repository.
+This template is maintained in the public repository `ACB-prgm/SecondBrainTemplate`. Issues or change requests for the template can be managed through that repository.
