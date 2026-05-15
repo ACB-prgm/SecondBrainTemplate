@@ -35,7 +35,7 @@ The GitHub action uses OAuth scopes that allow repository access and user-profil
 
 The public template repository should contain only template files, operating instructions, OpenAPI schemas, optional skills, privacy policy text, and scaffolding. It should not contain user-specific personal data.
 
-Because Git preserves history, deleting a file from the current branch may not remove it from prior commits. Users who need permanent removal from Git history should use GitHub-supported history rewriting or repository deletion workflows.
+Because Git preserves history, deleting a file from the current branch may not remove it from prior commits. Sensitive information, secrets, or mistakenly stored data may remain recoverable from repository history unless history rewriting or repository deletion is performed.
 
 ## Google Access
 
@@ -63,13 +63,59 @@ It must not overwrite user data, subject folders, manifests, indexes, `USER_PREF
 
 SecondBrain may load optional skill files from `.skills/` only when the user asks for that workflow or the current task clearly requires it.
 
-The Bug Reporting skill may create or update issues in `ACB-prgm/SecondBrainTemplate` for SecondBrain system defects, schema issues, workflow bugs, or maintenance improvements. Personal user records, health information, insurance information, HOA matters, ordinary todos, and private source material should not be filed as public template issues.
+The Bug Reporting skill may create or update issues in `ACB-prgm/SecondBrainTemplate` for SecondBrain system defects, schema issues, workflow bugs, or maintenance improvements.
+
+Issue reporting should:
+
+- require explicit user approval before creation,
+- avoid personal identifiers and sensitive records,
+- and prefer sanitized summaries and minimal reproduction details.
+
+Personal records, health information, insurance information, HOA matters, uploaded documents, or ordinary user todos should not be filed as public template issues.
 
 ## Sensitive Information
 
-Users should avoid storing credentials, private keys, access tokens, passwords, recovery phrases, or other secrets in SecondBrain, Google Tasks, Calendar events, or Sheets.
+Users should avoid storing credentials, private keys, access tokens, passwords, recovery phrases, OAuth credentials, API keys, or other secrets in SecondBrain, Google Tasks, Calendar events, or Sheets.
+
+SecondBrain may warn users when sensitive secrets appear likely to be stored, but it may still proceed if the user explicitly confirms.
 
 For sensitive records such as health, legal, financial, insurance, tax, identity, or employment data, SecondBrain should preserve source wording or source references and distinguish raw/source material, extracted facts, and synthesized summaries.
+
+## Security Limitations
+
+SecondBrain is a convenience and organization system, not a hardened secure vault.
+
+Data may be exposed through:
+
+- Git history persistence,
+- OAuth token compromise,
+- third-party service compromise,
+- accidental sharing,
+- prompt/model errors,
+- synchronization mistakes,
+- user error,
+- or platform-level vulnerabilities.
+
+No guarantee of absolute privacy, security, durability, or data preservation is provided.
+
+Users are responsible for deciding what information to store and for maintaining their own backups and operational security practices.
+
+## Liability Disclaimer
+
+The template, prompts, schemas, and workflows are provided as-is without warranties or guarantees.
+
+To the maximum extent permitted by law, the creator and maintainers of `SecondBrainTemplate` are not responsible for:
+
+- data loss,
+- incorrect storage or retrieval,
+- duplicate or missed reminders/events,
+- synchronization failures,
+- privacy exposure,
+- third-party service behavior,
+- prompt/model mistakes,
+- or security incidents arising from use of the system.
+
+Users are responsible for reviewing actions, confirmations, stored data, and integrations before relying on the system for important or sensitive workflows.
 
 ## Third-Party Services
 
