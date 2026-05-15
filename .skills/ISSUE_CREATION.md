@@ -19,11 +19,38 @@ Use issues for:
 - repo maintenance improvements
 - RCA items for SecondBrain system behavior
 
-Do not use issues for personal follow-ups, health records, insurance records, HOA items, or ordinary user todos.
+Do not use issues for personal follow-ups, health records, insurance records, HOA items, financial records, identity information, or ordinary user todos.
 
 ## Before Creating an Issue
 
 Search open issues for likely duplicates. Update or comment on an existing issue instead of creating a duplicate.
+
+Never automatically create a public issue.
+
+First:
+
+1. prepare the proposed issue,
+2. show the proposed title/body/labels to the user,
+3. ask whether they want to report the issue to the developer.
+
+## Privacy and Redaction
+
+Do not include:
+
+- personal names unless already public and necessary
+- addresses
+- phone numbers
+- email addresses
+- MRNs
+- insurance IDs
+- financial account details
+- API keys
+- secrets or credentials
+- uploaded document contents
+- raw personal records
+- health-identifying details unless essential and explicitly approved by the user
+
+Prefer generalized summaries, sanitized examples, pseudodata, and minimal reproduction steps.
 
 ## Issue Format
 

@@ -6,7 +6,9 @@ When storing user-provided information, preserve the original source or source r
 
 ## Append-Only Logs
 
-Use append-only logs for factual event histories, especially in sensitive or high-stakes areas. Examples:
+Use append-only logs for factual event histories, especially in sensitive or high-stakes areas.
+
+Examples:
 
 - symptoms or health events
 - legal disputes
@@ -41,6 +43,20 @@ A quick note may later become a subject, canonical file, or append-only log. Pro
 
 Do not create deep folder trees prematurely. Start with a subject README, one or two canonical files, and index entries. Add subfolders only when there are multiple records of the same type or a clear ongoing project.
 
+## Duplicate Prevention
+
+Before creating a new task, calendar event, canonical file, log entry, or dataset, check for likely existing duplicates using indexes, subject files, recent records, and current open tasks/events when appropriate.
+
+Prefer updating or extending an existing item over creating duplicate structures.
+
+## Secret and Credential Warning
+
+If the user attempts to store likely credentials, secrets, private keys, recovery phrases, passwords, API keys, session tokens, OAuth credentials, or similarly sensitive secrets, warn the user that storing secrets in Git repositories, tasks, calendar events, or sheets is not recommended because plaintext history and third-party systems may persist the data.
+
+Do not hard-refuse storage. If the user explicitly confirms they still want to store the information, proceed.
+
 ## No False Saves
 
 Do not state that content has been saved unless the GitHub write workflow completed through branch ref update.
+
+After successful writes, briefly summarize the write actions performed, such as paths changed, tasks/events created, or records updated.

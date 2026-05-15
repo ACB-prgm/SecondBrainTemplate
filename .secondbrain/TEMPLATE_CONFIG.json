@@ -13,7 +13,8 @@
     ".secondbrain/TEMPLATE_SYNC.md",
     ".secondbrain/FOLLOW_UPS.md",
     ".secondbrain/GOOGLE_WORKFLOWS.md",
-    ".secondbrain/SKILLS_MANIFEST.md"
+    ".secondbrain/SKILLS_MANIFEST.md",
+    "USER_PREFS.md"
   ],
   "managed_paths": [
     ".secondbrain/BOOTSTRAP.md",
@@ -28,12 +29,14 @@
     ".secondbrain/GOOGLE_WORKFLOWS.md",
     ".secondbrain/SKILLS_MANIFEST.md",
     ".skills/ISSUE_CREATION.md",
-    "follow-ups.md",
+    ".skills/TABULAR_STORAGE.md",
     "templates/subject_README.md",
     "templates/record_note.md",
     "templates/source_artifact_note.md"
   ],
   "user_managed_after_creation": [
+    "USER_PREFS.md",
+    "follow-ups.md",
     "manifest.md",
     "index/files.json",
     "index/subjects.json",
@@ -45,6 +48,7 @@
   "state_file": ".secondbrain/TEMPLATE_STATE.json",
   "notes": [
     "Do not manually maintain a template version. The template branch HEAD commit SHA is the authoritative version.",
-    "TEMPLATE_STATE.json belongs only in generated/private SecondBrain repos, not in this template repo."
+    "TEMPLATE_STATE.json belongs only in generated/private SecondBrain repos, not in this template repo.",
+    "USER_PREFS.md and follow-ups.md are read at runtime but user-managed after creation; template sync must not overwrite them."
   ]
 }

@@ -1,6 +1,6 @@
 # Google Workflows
 
-Google Tasks and Google Calendar are optional action tools used only when the user explicitly asks to create, read, update, complete, or delete todos, reminders, or calendar events.
+Google Tasks and Google Calendar are optional action tools used for todos, reminders, and scheduled commitments.
 
 SecondBrain remains the knowledge repository. Google Tasks and Calendar are action/time-management systems.
 
@@ -9,33 +9,20 @@ SecondBrain remains the knowledge repository. Google Tasks and Calendar are acti
 - Use SecondBrain for records, source material, summaries, indexes, and data-quality follow-ups.
 - Use Google Tasks for checklist-style todos and due-date reminders.
 - Use Google Calendar for scheduled events, appointments, meetings, recurring events, and timed reminders.
-- Do not automatically convert SecondBrain follow-ups into Google tasks or calendar events unless the user explicitly asks.
+- Do not automatically convert ordinary SecondBrain follow-ups into Google tasks or calendar events unless the item itself clearly belongs there.
 
 ## Todos
 
-Use Google Tasks when the user asks to add, read, edit, complete, or delete a todo.
+Use Google Tasks for actionable items, checklist workflows, due-date reminders, and ongoing operational tasks.
 
 Examples:
 
-- Add a todo to call UCLA neurology.
-- Mark the MRI scheduling task complete.
-- Show my open tasks.
+- Call UCLA neurology.
+- Schedule MRI imaging.
+- Upload insurance paperwork.
+- Renew vehicle registration.
 
-For due-date reminders without a specific scheduled time, prefer Google Tasks with a due date.
-
-## Reminders
-
-There is no separate reminder store in this workflow. Represent reminders as either:
-
-- Google Tasks with due dates for action reminders without a scheduled calendar block.
-- Google Calendar events with reminders for timed or recurring reminders.
-
-Rule of thumb:
-
-- "Remind me to do X" with no time -> Google Task.
-- "Remind me tomorrow" with no time -> Google Task due tomorrow.
-- "Remind me at 9 AM" -> Google Calendar event or timed reminder.
-- "Remind me every Monday" -> recurring Google Calendar event unless the user asks for a task.
+For reminders without a scheduled time, prefer Google Tasks.
 
 ## Calendar Events
 
@@ -45,26 +32,35 @@ Examples:
 
 - Doctor appointments.
 - Meetings.
-- Calls with a specific time.
+- Flights.
 - Timed reminders.
 - Recurring reminders.
 
-When creating events, include title, date/time, timezone if needed, location, description, and reminder settings when provided.
+When creating events, include title, date/time, timezone if needed, location, description, and reminders when available.
 
-## Explicit-Request Rule
+## Proactive Behavior
 
-Only use Google Tasks or Calendar when the user explicitly asks for external action management.
+After ingesting information, evaluate whether it clearly or potentially belongs in Google Tasks, Google Calendar, or `follow-ups.md`.
 
-Do not create, edit, complete, or delete Google items just because a SecondBrain follow-up exists.
+Rules:
 
-Valid explicit requests include:
+- If the information clearly represents a scheduled appointment, meeting, reservation, deadline, or timed commitment, create a Google Calendar event without asking first.
+- If the information clearly represents an actionable todo or reminder, create a Google Task without asking first.
+- If the item only potentially belongs in Tasks/Calendar, briefly ask the user.
+- The user can approve or deny tool actions through the ChatGPT action confirmation flow.
+- Do not create Google items for vague ideas, speculative plans, or low-confidence interpretations.
 
-- "Add this to my todo list."
-- "Remind me tomorrow."
-- "Put this appointment on my calendar."
-- "Turn my critical follow-ups into tasks."
-- "Delete that reminder."
-- "Move that event to next week."
+Examples of automatic creation:
+
+- MRI appointment details with date/time/location -> Calendar event.
+- "I need to call neurology next week" -> Google Task.
+- Flight itinerary -> Calendar event.
+
+Examples that should ask first:
+
+- General discussion about wanting therapy.
+- Mentioning a future idea without commitment.
+- Loose goals or aspirations.
 
 ## Confirmation Rule
 
@@ -93,7 +89,7 @@ Follow up on MRI/MRA order from visit summary.
 
 Do not add SecondBrain references to generic tasks unless they improve retrieval, context, auditability, or future updates.
 
-If useful, also store external Google IDs or links in the related SecondBrain record. Examples:
+If useful, also store external Google IDs or links in the related SecondBrain record:
 
 - Google Task ID
 - Google Calendar Event ID
