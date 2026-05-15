@@ -1,0 +1,283 @@
+openapi: 3.1.0
+
+info:
+  title: Google Sheets Tabular Storage for SecondBrain
+  version: 0.1.0
+  description: >
+    Optional Google Sheets action schema for SecondBrain tabular storage.
+    Use only with the Tabular Storage skill. GitHub remains the source-of-truth
+    context layer; Sheets stores scalable row/column datasets.
+    SRC = https://github.com/ACB-prgm/SecondBrainTemplate/blob/dev/google_sheets_openapi.yaml
+
+servers:
+  - url: https://sheets.googleapis.com
+
+components:
+  securitySchemes:
+    googleOAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/drive.file: Create, read, and edit Google Sheets files created or explicitly authorized for this app.
+
+  schemas:
+    SpreadsheetCreateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        properties:
+          type: object
+          additionalProperties: false
+          properties:
+            title:
+              type: string
+              minLength: 1
+          required:
+            - title
+        sheets:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              properties:
+                type: object
+                additionalProperties: false
+                properties:
+                  title:
+                    type: string
+                    minLength: 1
+                required:
+                  - title
+      required:
+        - properties
+
+    ValueRange:
+      type: object
+      additionalProperties: false
+      properties:
+        range:
+          type: string
+        majorDimension:
+          type: string
+          enum: [ROWS, COLUMNS]
+          default: ROWS
+        values:
+          type: array
+          items:
+            type: array
+            items:
+              type:
+                - string
+                - number
+                - boolean
+                - 'null'
+      required:
+        - values
+
+    BatchUpdateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        requests:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            additionalProperties: true
+      required:
+        - requests
+
+security:
+  - googleOAuth:
+      - https://www.googleapis.com/auth/drive.file
+
+paths:
+  /v4/spreadsheets:
+    post:
+      operationId: createSpreadsheet
+      summary: Create a Google Spreadsheet for a SecondBrain domain dataset
+      description: Use only when the Tabular Storage skill determines a domain spreadsheet is needed.
+      x-openai-isConsequential: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpreadsheetCreateRequest'
+      responses:
+        '200':
+          description: Created spreadsheet.
+
+  /v4/spreadsheets/{spreadsheetId}:
+    get:
+      operationId: getSpreadsheet
+      summary: Get spreadsheet metadata, including sheets/tabs
+      x-openai-isConsequential: false
+      parameters:
+        - name: spreadsheetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: includeGridData
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Spreadsheet metadata.
+
+  /v4/spreadsheets/{spreadsheetId}:batchUpdate:
+    post:
+      operationId: batchUpdateSpreadsheet
+      summary: Make structural spreadsheet updates such as adding tabs or changing properties
+      description: Use for sheet/tab creation, renaming, freezing header rows, and other spreadsheet-level changes.
+      x-openai-isConsequential: true
+      parameters:
+        - name: spreadsheetId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchUpdateRequest'
+      responses:
+        '200':
+          description: Spreadsheet batch update result.
+
+  /v4/spreadsheets/{spreadsheetId}/values/{range}:
+    get:
+      operationId: getSheetValues
+      summary: Read values from a sheet range
+      x-openai-isConsequential: false
+      parameters:
+        - name: spreadsheetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: range
+          in: path
+          required: true
+          schema:
+            type: string
+          description: A1 notation, such as transactions!A1:H100.
+        - name: majorDimension
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [ROWS, COLUMNS]
+            default: ROWS
+        - name: valueRenderOption
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [FORMATTED_VALUE, UNFORMATTED_VALUE, FORMULA]
+            default: FORMATTED_VALUE
+      responses:
+        '200':
+          description: Range values as JSON.
+
+    put:
+      operationId: updateSheetValues
+      summary: Replace values in a sheet range
+      x-openai-isConsequential: true
+      parameters:
+        - name: spreadsheetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: range
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: valueInputOption
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [RAW, USER_ENTERED]
+            default: USER_ENTERED
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValueRange'
+      responses:
+        '200':
+          description: Update result.
+
+  /v4/spreadsheets/{spreadsheetId}/values/{range}:append:
+    post:
+      operationId: appendSheetValues
+      summary: Append rows to a sheet range
+      x-openai-isConsequential: true
+      parameters:
+        - name: spreadsheetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: range
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: valueInputOption
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [RAW, USER_ENTERED]
+            default: USER_ENTERED
+        - name: insertDataOption
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [OVERWRITE, INSERT_ROWS]
+            default: INSERT_ROWS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValueRange'
+      responses:
+        '200':
+          description: Append result.
+
+  /v4/spreadsheets/{spreadsheetId}/values/{range}:clear:
+    post:
+      operationId: clearSheetValues
+      summary: Clear values from a sheet range
+      x-openai-isConsequential: true
+      parameters:
+        - name: spreadsheetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: range
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Clear result.
