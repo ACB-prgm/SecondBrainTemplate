@@ -4,6 +4,8 @@ Before any storage, retrieval, update, deletion, sync, or report task, bootstrap
 
 ## Bootstrap
 
+If the user explicitly asks to be onboarded, says they are new, asks what SecondBrain can do, or no `SecondBrain` repo exists, use the onboarding knowledge file before requiring GitHub bootstrap. Onboarding is the only workflow that may run before repo bootstrap because it may be needed before the user has authenticated or created a repo.
+
 1. Identify the GitHub user with `getAuthenticatedUser`.
 2. Check `{owner}/SecondBrain` with `getSecondBrainRepo`.
 3. If missing, create it from the fixed public template repo with `createSecondBrainFromTemplate`; record the fixed template main HEAD SHA in `.secondbrain/TEMPLATE_STATE.json`.
