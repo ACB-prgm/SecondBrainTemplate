@@ -2,12 +2,12 @@ openapi: 3.1.0
 
 info:
   title: GitHub SecondBrain
-  version: 2.2.0
+  version: 2.3.0
   description: >
     GitHub-backed storage action for a private repository named SecondBrain,
     created from the fixed public template repository ACB-prgm/SecondBrainTemplate.
     Uses GitHub's Git Database API for raw text reads, direct tree-content writes,
-    atomic commits, and managed template sync based on the template main branch HEAD SHA. SRC = 'https://github.com/ACB-prgm/SecondBrainTemplate/blob/dev/secondbrain_github_openapi_v2.yaml'
+    atomic commits, managed template sync, and sanitized issue reporting for the fixed template repository. SRC = 'https://github.com/ACB-prgm/SecondBrainTemplate/blob/dev/secondbrain_github_openapi_v2.yaml'
 
 servers:
   - url: https://api.github.com
@@ -195,6 +195,63 @@ components:
                 type: string
       required: [tree]
 
+    TemplateIssueCreateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 256
+        body:
+          type: string
+          description: Sanitized issue body. Do not include personal identifiers, private records, secrets, or raw user data.
+        labels:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+        assignees:
+          type: array
+          maxItems: 5
+          items:
+            type: string
+      required:
+        - title
+        - body
+
+    TemplateIssueUpdateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          maxLength: 256
+        body:
+          type: string
+        state:
+          type: string
+          enum: [open, closed]
+        state_reason:
+          type: string
+          enum: [completed, not_planned, duplicate, reopened]
+        labels:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+
+    TemplateIssueCommentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        body:
+          type: string
+          minLength: 1
+          description: Sanitized comment body. Do not include personal identifiers, private records, secrets, or raw user data.
+      required:
+        - body
+
 security:
   - githubOAuth:
       - repo
@@ -209,6 +266,166 @@ paths:
       responses:
         '200':
           description: Authenticated user profile.
+
+  /repos/ACB-prgm/SecondBrainTemplate/issues:
+    get:
+      operationId: listTemplateIssues
+      summary: List issues in the fixed SecondBrainTemplate repository
+      description: Use before creating a template issue to check for likely duplicates.
+      x-openai-isConsequential: false
+      parameters:
+        - name: state
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [open, closed, all]
+            default: open
+        - name: labels
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 30
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            const: application/vnd.github+json
+      responses:
+        '200':
+          description: Template issue list.
+    post:
+      operationId: createTemplateIssue
+      summary: Create a sanitized issue in the fixed SecondBrainTemplate repository
+      description: Use only after the Issue Creation skill prepares a sanitized issue and the user explicitly approves reporting it.
+      x-openai-isConsequential: true
+      parameters:
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            const: application/vnd.github+json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateIssueCreateRequest'
+      responses:
+        '201':
+          description: Template issue created.
+
+  /repos/ACB-prgm/SecondBrainTemplate/issues/{issue_number}:
+    get:
+      operationId: getTemplateIssue
+      summary: Read one issue from the fixed SecondBrainTemplate repository
+      x-openai-isConsequential: false
+      parameters:
+        - name: issue_number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            const: application/vnd.github+json
+      responses:
+        '200':
+          description: Template issue.
+    patch:
+      operationId: updateTemplateIssue
+      summary: Update an issue in the fixed SecondBrainTemplate repository
+      description: Use only after the Issue Creation skill sanitizes the update and the user approves it.
+      x-openai-isConsequential: true
+      parameters:
+        - name: issue_number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            const: application/vnd.github+json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateIssueUpdateRequest'
+      responses:
+        '200':
+          description: Template issue updated.
+
+  /repos/ACB-prgm/SecondBrainTemplate/issues/{issue_number}/comments:
+    get:
+      operationId: listTemplateIssueComments
+      summary: List comments on a fixed SecondBrainTemplate issue
+      x-openai-isConsequential: false
+      parameters:
+        - name: issue_number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 30
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            const: application/vnd.github+json
+      responses:
+        '200':
+          description: Template issue comments.
+    post:
+      operationId: commentOnTemplateIssue
+      summary: Add a sanitized comment to a fixed SecondBrainTemplate issue
+      description: Use only after the Issue Creation skill sanitizes the comment and the user approves it.
+      x-openai-isConsequential: true
+      parameters:
+        - name: issue_number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            const: application/vnd.github+json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateIssueCommentRequest'
+      responses:
+        '201':
+          description: Template issue comment created.
 
   /repos/ACB-prgm/SecondBrainTemplate:
     get:
