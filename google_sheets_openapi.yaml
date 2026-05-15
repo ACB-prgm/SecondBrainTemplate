@@ -2,7 +2,7 @@ openapi: 3.1.0
 
 info:
   title: Google Sheets Tabular Storage for SecondBrain
-  version: 0.1.0
+  version: 0.1.1
   description: >
     Optional Google Sheets action schema for SecondBrain tabular storage.
     Use only with the Tabular Storage skill. GitHub remains the source-of-truth
@@ -55,12 +55,10 @@ components:
       required:
         - properties
 
-    ValueRange:
+    ValuesOnly:
       type: object
       additionalProperties: false
       properties:
-        range:
-          type: string
         majorDimension:
           type: string
           enum: [ROWS, COLUMNS]
@@ -217,7 +215,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ValueRange'
+              $ref: '#/components/schemas/ValuesOnly'
       responses:
         '200':
           description: Update result.
@@ -257,7 +255,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ValueRange'
+              $ref: '#/components/schemas/ValuesOnly'
       responses:
         '200':
           description: Append result.
