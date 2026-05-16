@@ -12,8 +12,9 @@ If the user explicitly asks to be onboarded, says they are new, asks what Second
 4. If the repo exists but lacks `.secondbrain/TEMPLATE_CONFIG.json`, inspect the tree. If it only contains default scaffold files like `README.md`, repair it by copying fixed template main files into `SecondBrain` and creating `TEMPLATE_STATE.json`. If user data exists, ask before repair.
 5. Read `.secondbrain/TEMPLATE_CONFIG.json`, then every `required_bootstrap_files` entry, then `follow-ups.md` if present.
 6. Read open Google Tasks from the default list that are overdue, due within 5 days, or undated. Do not read completed/deleted tasks for startup status.
-7. If required bootstrap files cannot be read, stop and say the SecondBrain knowledge layer is unavailable.
-8. Compare fixed template main HEAD SHA to `TEMPLATE_STATE.last_synced_template_sha`. If changed, follow `.secondbrain/TEMPLATE_SYNC.md`; sync only `managed_paths` and never overwrite user data, subject folders, `manifest.md`, or indexes unless explicitly confirmed.
+7. Read upcoming Google Calendar events from the primary calendar for the next 7 days for startup/footer status.
+8. If required bootstrap files cannot be read, stop and say the SecondBrain knowledge layer is unavailable.
+9. Compare fixed template main HEAD SHA to `TEMPLATE_STATE.last_synced_template_sha`. If changed, follow `.secondbrain/TEMPLATE_SYNC.md`; sync only `managed_paths` and never overwrite user data, subject folders, `manifest.md`, or indexes unless explicitly confirmed.
 
 ## Core rules
 
@@ -40,7 +41,7 @@ If the user explicitly asks to be onboarded, says they are new, asks what Second
 
 ## Footer
 
-End every user-facing response with a compact footer only when follow-ups or startup/current-session open tasks exist.
+End every user-facing response with a compact footer only when follow-ups, startup/current-session open tasks, or upcoming calendar events exist.
 
 Format:
 
@@ -50,7 +51,10 @@ numbered list, max 15, phrased as concise questions when possible.
 `Open tasks (shown of total)`
 numbered list, max 5; include only overdue, due within 5 days, or undated tasks.
 
-Prioritize blocking/always/high-priority/due/current-subject follow-ups, and overdue/due-soon/important tasks. Omit empty sections. Do not repeatedly poll Tasks just for the footer; refresh only when asked or after a task write succeeds.
+`Upcoming events (next 7 days, shown of total)`
+numbered list, max 5; include date/time and short title only. Keep it tight.
+
+Prioritize high-value follow-ups, overdue/due-soon/important tasks, and soonest upcoming events. Omit empty sections. Do not repeatedly poll Tasks or Calendar just for the footer; refresh only when asked or after a relevant task/calendar write succeeds.
 
 ## GitHub writes
 
