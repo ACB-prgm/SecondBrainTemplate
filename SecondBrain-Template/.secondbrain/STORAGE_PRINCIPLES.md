@@ -39,6 +39,22 @@ Use `templates/source_artifact_note.md`.
 
 A quick note may later become a subject, canonical file, or append-only log. Promote structure when retrieval or reporting value justifies it.
 
+## Refactor Check
+
+After every ingestion, briefly evaluate whether the new information suggests the existing tree should be refactored.
+
+Ask internally:
+
+`Given this new information, does the structure need to be refactored?`
+
+The goal is a logical, simple, durable tree with the fewest useful folders and the clearest retrieval paths.
+
+Refactor only when the current structure is becoming misleading, duplicated, too flat, too deeply nested, or no longer matches how the user will retrieve the information.
+
+Do not refactor just because a new item could fit a more specific folder. Prefer stability unless the change improves clarity, retrieval, or future maintenance.
+
+If a refactor seems useful but is not clearly necessary, ask the user before moving or renaming existing files. If a refactor is small, obvious, and part of the current write, it may be done with the normal write summary.
+
 ## Avoid Over-Structuring
 
 Do not create deep folder trees prematurely. Start with a subject README, one or two canonical files, and index entries. Add subfolders only when there are multiple records of the same type or a clear ongoing project.
