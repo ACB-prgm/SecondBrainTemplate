@@ -29,40 +29,18 @@ Create a follow-up only when one of these is true:
 
 Do not create speculative follow-ups, nice-to-have research tasks, or curiosity-driven questions.
 
-## Trigger Types
-
-Each follow-up must have exactly one trigger type.
-
-### always
-
-Prioritize in the follow-up footer until resolved. Use only for critical gaps.
-
-### subject
-
-Use when the follow-up relates to a specific subject. Subject relevance should affect ordering, but subject-scoped follow-ups should still appear in the footer when there is room.
-
-### after_date
-
-Use when the follow-up should not be acted on until a future date. This does not create an automatic reminder. It only affects priority/order during future SecondBrain sessions.
-
-### blocking
-
-Use when the missing information prevents a task or record from being completed accurately.
-
 ## Queue Schema
 
 Use this table in `follow-ups.md`:
 
-| ID | Created | Trigger | Subject | After Date | Prompt | Reason | Related Path | Priority |
-|---|---:|---|---|---:|---|---|---|---|
+| ID | Created | Subject | Prompt | Reason | Related Path | Priority |
+|---|---:|---|---|---|---|---|
 
 Field guidance:
 
 - `ID`: stable ID in the form `FU-YYYY-MM-DD-###`.
 - `Created`: ISO date when the follow-up was created.
-- `Trigger`: one of `always`, `subject`, `after_date`, or `blocking`.
 - `Subject`: related top-level subject or blank if not subject-specific.
-- `After Date`: ISO date for `after_date` triggers, otherwise blank.
 - `Prompt`: concise question to ask the user whenever possible.
 - `Reason`: why the information matters for accuracy or retrieval.
 - `Related Path`: most relevant file, folder, or intended location.
@@ -78,10 +56,10 @@ At the end of every user-facing response, include a short follow-up footer when 
 
 Footer rules:
 
-- Always show active follow-ups when any exist, regardless of current subject relevance.
+- Always show active follow-ups when any exist.
 - Show at most 15 follow-ups.
 - Phrase follow-up items as concise questions for the user whenever possible.
-- Prioritize `always`, `blocking`, due `after_date`, high-priority, and current-subject items, but include lower-priority items too when there is room.
+- Prioritize blocking, high-priority, due/current-subject, and recently relevant items.
 - If there are no active follow-ups, omit the follow-up section entirely.
 - Keep each item short, ideally under one line.
 - Do not derail the user's requested task unless the follow-up is blocking.
