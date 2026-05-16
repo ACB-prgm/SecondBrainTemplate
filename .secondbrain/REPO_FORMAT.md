@@ -9,7 +9,7 @@ Required root files and folders:
 - `README.md` — explains the repository purpose and invariants.
 - `.secondbrain/` — operating instructions, template config, and sync rules.
 - `.templates/` — reusable file templates.
-- `.user/` — user-managed routing files, preferences, follow-ups, and aliases.
+- `.user/` — user-managed routing files, preferences, follow-ups, aliases, and entity metadata.
 
 Required `.user/` files:
 
@@ -17,6 +17,7 @@ Required `.user/` files:
 - `.user/USER_PREFS.md` — durable user preferences for storage, retrieval, summarization, organization, and actions.
 - `.user/FOLLOW-UPS.md` — active data-quality follow-ups.
 - `.user/ALIASES.md` — sparse mappings for non-obvious user-specific names, nicknames, abbreviations, or renamed entities.
+- `.user/ENTITIES.json` — durable user-specific real-world entities used for retrieval and disambiguation.
 
 ## Routing Model
 
@@ -57,6 +58,27 @@ Use aliases only for non-obvious mappings, such as:
 - vendor or project names whose correct location is not obvious from the folder tree.
 
 Do not create aliases for obvious terms, ordinary synonyms, receipts, individual source artifacts, or phrases the model can infer from filenames and subject folders.
+
+## Entity Registry
+
+`.user/ENTITIES.json` is a structured registry for durable user-specific real-world entities that recur across records or materially improve retrieval.
+
+Use it for:
+
+- people, family members, household members, clinicians, and other individual contacts
+- businesses, vendors, employers, schools, insurers, institutions, agencies, and organizations
+- user-specific properties, accounts, services, systems, or projects when they are durable retrieval anchors
+
+Do not use it for:
+
+- medications, diagnoses, conditions, symptoms, procedures, labs, allergies, or other medical concepts
+- generic concepts, tags, ordinary subject names, product categories, or taxonomy terms
+- one-off receipts, individual documents, uploaded files, or source artifacts
+- entities that are obvious from a single subject folder and unlikely to recur
+
+When a medication or medical concept appears in a record, store it in the relevant subject file, such as `health/medications.md`, and link any related real-world entities such as clinicians, pharmacies, or insurers through `.user/ENTITIES.json`.
+
+`.user/ALIASES.md` remains a sparse routing aid. Entity aliases should live inside `.user/ENTITIES.json` when they are alternate names for the same durable entity.
 
 ## Subject Folders
 

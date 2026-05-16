@@ -9,7 +9,7 @@ For incoming content:
 1. Capture the user-provided material without losing original wording.
 2. Classify durable subject, record type, entities, dates, status, and sensitivity.
 3. Store source artifacts or source links separately from summaries.
-4. Create or update subject files, append-only logs, companion notes, and relevant README routing documentation as appropriate.
+4. Create or update subject files, append-only logs, companion notes, entity records, and relevant README routing documentation as appropriate.
 5. Update `.user/MANIFEST.md` or local directory README files only when retrieval clarity materially improves.
 6. Return a retrieval handle: title, subject, canonical path, and any non-obvious aliases if useful.
 
@@ -47,9 +47,10 @@ When answering from SecondBrain, prefer:
 2. `.user/MANIFEST.md` and top-level subject folders.
 3. Subject folder `README.md` files and canonical subject files.
 4. Subfolder `README.md` files when deeper routing is needed.
-5. Append-only logs and companion source notes.
-6. Sparse aliases only for non-obvious mappings.
-7. GitHub search or broader inference only after tree/path inspection.
+5. `.user/ENTITIES.json` for durable user-specific people, organizations, vendors, properties, accounts, institutions, and agencies.
+6. Append-only logs and companion source notes.
+7. Sparse aliases only for non-obvious mappings.
+8. GitHub search or broader inference only after tree/path inspection.
 
 Use the repository tree and local README routing before attempting broad search.
 

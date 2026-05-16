@@ -13,3 +13,4 @@ Human-readable top-level routing map for the repository.
 - Use local README routing instead of maintaining exhaustive global routing files.
 - Source artifacts usually live near the subject or project they support.
 - Use sparse aliases only for non-obvious mappings.
+- Use `.user/ENTITIES.json` for durable user-specific people, organizations, businesses, vendors, properties, accounts, institutions, and agencies.

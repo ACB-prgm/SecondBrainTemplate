@@ -71,6 +71,7 @@ When storing content, update related files in one commit when possible. Example:
 - canonical subject note
 - `.user/MANIFEST.md`
 - `.user/ALIASES.md` when non-obvious aliases are introduced
+- `.user/ENTITIES.json` when durable user-specific entities are introduced or materially updated
 - relevant local `README.md` routing notes
 - related append-only logs or companion source notes
 

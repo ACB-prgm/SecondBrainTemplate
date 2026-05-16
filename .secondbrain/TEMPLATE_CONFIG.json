@@ -39,6 +39,7 @@
     ".user/FOLLOW-UPS.md",
     ".user/USER_PREFS.md",
     ".user/ALIASES.md",
+    ".user/ENTITIES.json",
     "top-level subject folders"
   ],
   "state_file": ".secondbrain/TEMPLATE_STATE.json",

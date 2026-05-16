@@ -41,19 +41,33 @@ These examples are guidance for consistent record metadata. They do not require 
 }
 ```
 
-## Entity Metadata
+## Entity Registry
+
+`.user/ENTITIES.json` stores durable user-specific real-world entities that improve retrieval and disambiguation. It is not a general knowledge graph.
+
+Use entities for people, clinicians, organizations, businesses, vendors, properties, accounts, institutions, agencies, and similar recurring user-specific entities.
+
+Do not use entities for medications, diagnoses, conditions, symptoms, procedures, labs, allergies, tags, generic concepts, ordinary subject names, one-off receipts, individual source artifacts, or items that are better represented as records inside a subject folder.
 
 ```json
 {
-	"id": "entity.slug",
-	"name": "Entity Name",
-	"type": "person | organization | property | account | system | vendor | project | other",
-	"aliases": [],
-	"related_subjects": [],
-	"related_files": [],
-	"notes": "Short disambiguation note"
+	"version": 1,
+	"updated_date": "YYYY-MM-DD",
+	"entities": [
+		{
+			"id": "person.example-name",
+			"name": "Example Name",
+			"type": "person | clinician | organization | business | vendor | employer | school | insurer | government_agency | institution | property | account | service | system | project | other",
+			"aliases": [],
+			"related_subjects": [],
+			"related_files": [],
+			"notes": "Short factual disambiguation note. Do not duplicate full records here."
+		}
+	]
 }
 ```
+
+Entity IDs should be stable lowercase dotted IDs in the form `{type}.{slug}`, such as `person.aaron-bastian`, `clinician.felicia-chee`, or `vendor.home-depot`.
 
 ## Append-Only Event Entry
 
