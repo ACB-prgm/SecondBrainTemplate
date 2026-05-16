@@ -69,12 +69,10 @@ When storing content, update related files in one commit when possible. Example:
 
 - new subject README
 - canonical subject note
-- `manifest.md`
-- `index/files.json`
-- `index/subjects.json`
-- `index/entities.json`
-- `index/tags.json`
-- `index/aliases.json`
+- `.user/MANIFEST.md`
+- `.user/ALIASES.md` when non-obvious aliases are introduced
+- relevant local `README.md` routing notes
+- related append-only logs or companion source notes
 
 ## Conflict Handling
 

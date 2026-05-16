@@ -6,7 +6,7 @@ SecondBrain remains the knowledge repository. Google Tasks and Calendar are acti
 
 ## Tool Boundaries
 
-- Use SecondBrain for records, source material, summaries, indexes, and data-quality follow-ups.
+- Use SecondBrain for records, source material, summaries, routing metadata, and data-quality follow-ups.
 - Use Google Tasks for checklist-style todos and due-date reminders.
 - Use Google Calendar for scheduled events, appointments, meetings, recurring events, and timed reminders.
 - Do not automatically convert ordinary SecondBrain follow-ups into Google tasks or calendar events unless the item itself clearly belongs there.
@@ -40,7 +40,7 @@ When creating events, include title, date/time, timezone if needed, location, de
 
 ## Proactive Behavior
 
-After ingesting information, evaluate whether it clearly or potentially belongs in Google Tasks, Google Calendar, or `follow-ups.md`.
+After ingesting information, evaluate whether it clearly or potentially belongs in Google Tasks, Google Calendar, or `.user/FOLLOW-UPS.md`.
 
 Rules:
 

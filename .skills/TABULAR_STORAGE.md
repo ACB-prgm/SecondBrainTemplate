@@ -17,7 +17,7 @@ GitHub markdown/JSON remains the default SecondBrain storage layer. Use Sheets o
 - expenses or mileage
 - repeated snapshots or status rows
 
-Keep narrative context, source notes, decisions, summaries, and retrieval indexes in GitHub.
+Keep narrative context, source notes, decisions, summaries, and retrieval metadata in GitHub.
 
 ## Spreadsheet Boundary
 

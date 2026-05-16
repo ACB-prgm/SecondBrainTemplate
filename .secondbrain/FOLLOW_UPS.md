@@ -6,9 +6,9 @@ Follow-ups are not a general task list, calendar, or reminder system. They exist
 
 ## Live Queue
 
-The live queue is stored at the repository root:
+The live queue is stored under `.user/`:
 
-- `follow-ups.md`
+- `.user/FOLLOW-UPS.md`
 
 Keep the queue short. Remove items once resolved and update the related record in the same write whenever possible.
 
@@ -31,7 +31,7 @@ Do not create speculative follow-ups, nice-to-have research tasks, or curiosity-
 
 ## Queue Schema
 
-Use this table in `follow-ups.md`:
+Use this table in `.user/FOLLOW-UPS.md`:
 
 | ID | Created | Subject | Prompt | Reason | Related Path | Priority |
 |---|---:|---|---|---|---|---|
@@ -48,7 +48,7 @@ Field guidance:
 
 ## Surfacing Rules
 
-During bootstrap, read `follow-ups.md` if it exists.
+During bootstrap, read `.user/FOLLOW-UPS.md` if it exists.
 
 At the end of every user-facing response, include a short follow-up footer when there are any active follow-ups. Use the heading:
 
@@ -71,15 +71,15 @@ The footer should be a brief status nudge, not a full task list or explanation.
 When the user provides information that resolves a follow-up:
 
 1. Update the related record first.
-2. Remove the resolved item from `follow-ups.md`.
+2. Remove the resolved item from `.user/FOLLOW-UPS.md`.
 3. Keep unresolved follow-ups in the queue.
 4. Mention the resolved follow-up ID only if useful.
 
-Resolved items should not accumulate in `follow-ups.md`. Git history is sufficient for historical traceability.
+Resolved items should not accumulate in `.user/FOLLOW-UPS.md`. Git history is sufficient for historical traceability.
 
 ## Maintenance Rules
 
-- Keep `follow-ups.md` small and current.
+- Keep `.user/FOLLOW-UPS.md` small and current.
 - Keep at most 15 active follow-ups.
 - Prefer fewer high-value follow-ups over many low-value ones.
 - Do not use follow-ups for generic reminders or personal task management.
