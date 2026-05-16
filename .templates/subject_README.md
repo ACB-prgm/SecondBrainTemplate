@@ -22,7 +22,7 @@ Keep the structure compact and retrieval-oriented. Prefer a small number of cano
 
 ### Expected Layout
 
-- `README.md` — subject definition and local structure contract.
+- `README.md` — subject definition and local routing contract.
 - Canonical subject files as needed.
 - Append-only logs as needed.
 - Source artifact companion notes as needed.
@@ -33,9 +33,17 @@ Keep the structure compact and retrieval-oriented. Prefer a small number of cano
 | File | Purpose |
 |---|---|
 
-## Retrieval Notes
+## Local Routing Notes
 
-Document any important retrieval assumptions, aliases, recurring entities, timelines, or cross-links that help future retrieval and summarization.
+Describe:
+
+- important files or subfolders,
+- where common records usually live,
+- recurring entities or projects,
+- retrieval assumptions,
+- and any local conventions that help future retrieval.
+
+Do not attempt to maintain exhaustive file inventories. The README should guide retrieval, not duplicate the Git tree.
 
 ## Naming Conventions
 
