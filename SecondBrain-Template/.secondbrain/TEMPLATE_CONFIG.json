@@ -38,17 +38,14 @@
     "USER_PREFS.md",
     "follow-ups.md",
     "manifest.md",
-    "index/files.json",
-    "index/subjects.json",
-    "index/entities.json",
-    "index/tags.json",
-    "index/aliases.json",
+    "aliases.md",
     "top-level subject folders"
   ],
   "state_file": ".secondbrain/TEMPLATE_STATE.json",
   "notes": [
     "Do not manually maintain a template version. The template branch HEAD commit SHA is the authoritative version.",
     "TEMPLATE_STATE.json belongs only in generated/private SecondBrain repos, not in this template repo.",
-    "USER_PREFS.md and follow-ups.md are read at runtime but user-managed after creation; template sync must not overwrite them."
+    "USER_PREFS.md and follow-ups.md are read at runtime but user-managed after creation; template sync must not overwrite them.",
+    "Use manifest.md and local README routing instead of exhaustive global JSON indexes."
   ]
 }
