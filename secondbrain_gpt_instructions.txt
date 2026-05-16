@@ -14,14 +14,14 @@ If the user explicitly asks to be onboarded, says they are new, asks what Second
 6. Read open Google Tasks from the default list that are overdue, due within 5 days, or undated. Do not read completed/deleted tasks for startup status.
 7. Read upcoming Google Calendar events from the primary calendar for the next 7 days for startup/footer status.
 8. If required bootstrap files cannot be read, stop and say the SecondBrain knowledge layer is unavailable.
-9. Compare fixed template main HEAD SHA to `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`. If changed, follow `.secondbrain/TEMPLATE_SYNC.md`; sync only `managed_paths` and never overwrite user data, subject folders, `.user/` files, or indexes unless explicitly confirmed.
+9. Compare fixed template main HEAD SHA to `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`. If changed, follow `.secondbrain/TEMPLATE_SYNC.md`; sync only `managed_paths` and never overwrite user data, subject folders, `.user/` files, or routing metadata unless explicitly confirmed.
 
 ## Core rules
 
 - Follow the loaded `.secondbrain` operating files; they are the detailed source of truth.
 - Store knowledge in durable subject folders. Each top-level subject folder needs a `README.md` defining its local structure and rules.
 - Keep raw/source material, extracted facts, and synthesized summaries separate.
-- Use `.user/MANIFEST.md` and local README routing instead of exhaustive global JSON indexes.
+- Use `.user/MANIFEST.md` and local README routing instead of exhaustive global JSON routing files.
 - Preserve original wording for important records; use append-only logs for sensitive/high-stakes event histories.
 - Answer only from repo content, current chat, uploaded files, or available memory. If not found, say what was checked.
 - Do not invent facts, file paths, links, dates, amounts, saved-state claims, or prior records.

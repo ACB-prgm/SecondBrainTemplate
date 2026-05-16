@@ -1,15 +1,15 @@
 # Privacy Policy
 
-SecondBrain is a user-controlled personal knowledge system backed by a private GitHub repository named `SecondBrain`. It stores structured notes, indexes, summaries, source references, preferences, follow-ups, and optional links to external action systems such as Google Tasks, Google Calendar, and Google Sheets.
+SecondBrain is a user-controlled personal knowledge system backed by a private GitHub repository named `SecondBrain`. It stores structured notes, routing metadata, summaries, source references, preferences, follow-ups, and optional links to external action systems such as Google Tasks, Google Calendar, and Google Sheets.
 
 ## Data Stored
 
 SecondBrain may store information the user chooses to save, including:
 
-- notes, summaries, records, logs, and indexes
+- notes, summaries, records, logs, and routing metadata
 - source references and companion notes for files stored elsewhere
-- user preferences in `USER_PREFS.md`
-- data-quality follow-ups in `follow-ups.md`
+- user preferences in `.user/USER_PREFS.md`
+- data-quality follow-ups in `.user/FOLLOW-UPS.md`
 - template operating files under `.secondbrain/`
 - optional skill files under `.skills/`
 - optional references to Google Task IDs, Calendar event IDs, Calendar links, or Google Sheets IDs/links when useful
@@ -22,9 +22,9 @@ The user controls the private `SecondBrain` repository and decides what to store
 
 SecondBrain should not claim that information has been saved, deleted, synced, or externally updated unless the relevant GitHub or Google API operation succeeds.
 
-`USER_PREFS.md` is intended for durable behavioral preferences only. It should be updated only when the user explicitly asks or after the user agrees to save a proposed preference.
+`.user/USER_PREFS.md` is intended for durable behavioral preferences only. It should be updated only when the user explicitly asks or after the user agrees to save a proposed preference.
 
-`follow-ups.md` is intended for unresolved information needed for SecondBrain accuracy. It is not a general task list.
+`.user/FOLLOW-UPS.md` is intended for unresolved information needed for SecondBrain accuracy. It is not a general task list.
 
 ## GitHub Access
 
@@ -55,9 +55,9 @@ Google API data is handled by Google under Google's terms and privacy policies. 
 
 Template sync should update only template-managed files.
 
-It must not overwrite user data, subject folders, manifests, indexes, `USER_PREFS.md`, or `follow-ups.md` after creation unless the user explicitly instructs and confirms that action.
+It must not overwrite user data, subject folders, `.user/` files, or routing metadata after creation unless the user explicitly instructs and confirms that action.
 
-`USER_PREFS.md` and `follow-ups.md` may be read during bootstrap but are user-managed after creation.
+`.user/USER_PREFS.md` and `.user/FOLLOW-UPS.md` may be read during bootstrap but are user-managed after creation.
 
 ## Optional Skills and Issues
 

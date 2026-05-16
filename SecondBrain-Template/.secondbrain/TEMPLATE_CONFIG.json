@@ -46,6 +46,6 @@
     "Do not manually maintain a template version. The template branch HEAD commit SHA is the authoritative version.",
     "TEMPLATE_STATE.json belongs only in generated/private SecondBrain repos, not in this template repo.",
     ".user files are read at runtime but user-managed after creation; template sync must not overwrite them.",
-    "Use .user/MANIFEST.md and local README routing instead of exhaustive global JSON indexes."
+    "Use .user/MANIFEST.md and local README routing instead of exhaustive global JSON routing files."
   ]
 }

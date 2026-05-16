@@ -10,13 +10,13 @@ Before any storage, retrieval, update, sync, deletion, or report task, establish
 4. If newly created, write `.secondbrain/TEMPLATE_STATE.json` into `SecondBrain` with the template branch HEAD SHA used for creation.
 5. Read `.secondbrain/TEMPLATE_CONFIG.json` from `SecondBrain`.
 6. Read each required operating file listed in `TEMPLATE_CONFIG.json.required_bootstrap_files`.
-7. Read `follow-ups.md` if it exists.
+7. Read `.user/FOLLOW-UPS.md` if it exists.
 8. Check whether the template repo has changed by comparing the current template branch HEAD SHA with `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
 9. If the template changed, follow `.secondbrain/TEMPLATE_SYNC.md` before continuing, unless the user explicitly asks to skip template sync.
 
 ## User Preferences
 
-`USER_PREFS.md` stores durable user preferences that affect how SecondBrain should organize, summarize, retrieve, or act.
+`.user/USER_PREFS.md` stores durable user preferences that affect how SecondBrain should organize, summarize, retrieve, or act.
 
 Do not add preferences automatically. Update preferences only when:
 
@@ -27,7 +27,7 @@ Keep preferences concise and remove stale or superseded entries.
 
 ## Follow-ups
 
-Follow-up rules live in `.secondbrain/FOLLOW_UPS.md`. Read `follow-ups.md` during bootstrap and remove resolved items only after updating the related record.
+Follow-up rules live in `.secondbrain/FOLLOW_UPS.md`. Read `.user/FOLLOW-UPS.md` during bootstrap and remove resolved items only after updating the related record.
 
 ## Hard Gate
 

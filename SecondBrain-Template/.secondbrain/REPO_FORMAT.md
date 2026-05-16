@@ -7,13 +7,16 @@ SecondBrain uses a flexible subject-folder structure. It does not assume a fixed
 Required root files and folders:
 
 - `README.md` — explains the repository purpose and invariants.
-- `manifest.md` — human-readable top-level subject map and global routing notes.
 - `.secondbrain/` — operating instructions, template config, and sync rules.
-- `templates/` — reusable file templates.
+- `.templates/` — reusable file templates.
+- `.user/` — user-managed routing files, preferences, follow-ups, and aliases.
 
-Optional root files and folders:
+Required `.user/` files:
 
-- `aliases.md` — sparse mappings for non-obvious user-specific names, nicknames, abbreviations, or renamed entities.
+- `.user/MANIFEST.md` — human-readable top-level subject map and global routing notes.
+- `.user/USER_PREFS.md` — durable user preferences for storage, retrieval, summarization, organization, and actions.
+- `.user/FOLLOW-UPS.md` — active data-quality follow-ups.
+- `.user/ALIASES.md` — sparse mappings for non-obvious user-specific names, nicknames, abbreviations, or renamed entities.
 
 ## Routing Model
 
@@ -21,25 +24,25 @@ Use the repository tree itself as the primary structure.
 
 Retrieval should generally follow this loop:
 
-1. Read `manifest.md` to choose the likely top-level subject.
+1. Read `.user/MANIFEST.md` to choose the likely top-level subject.
 2. Inspect the likely folder tree.
 3. Read that folder's `README.md`.
 4. Decide whether the target record is directly in that folder or one level deeper.
 5. Repeat with a subfolder README only when needed.
 6. Use GitHub search as a fallback when tree/path inference is not enough.
 
-Do not maintain exhaustive global JSON indexes. They duplicate Git's tree and do not scale well for a model-first knowledge repo.
+Do not maintain exhaustive global JSON routing files. They duplicate Git's tree and do not scale well for a model-first knowledge repo.
 
 ## Manifest
 
-`manifest.md` is the global routing map. It should stay concise and describe:
+`.user/MANIFEST.md` is the global routing map. It should stay concise and describe:
 
 - top-level subject folders,
 - what each subject is for,
 - broad routing notes,
 - and any important global conventions.
 
-Do not duplicate detailed file inventories in `manifest.md`. Detailed local routing belongs in the relevant directory `README.md`.
+Do not duplicate detailed file inventories in `.user/MANIFEST.md`. Detailed local routing belongs in the relevant directory `README.md`.
 
 ## Aliases
 
@@ -79,7 +82,7 @@ Every top-level subject folder must contain `README.md` defining:
 - Naming conventions.
 - Related subjects.
 
-Use `templates/subject_README.md` when creating a new subject.
+Use `.templates/subject_README.md` when creating a new subject.
 
 When placing information into an existing subject folder, first read that folder's `README.md` and follow its structure when reasonable. If the existing structure does not fit the new information, the model may revise the folder structure and update the README in the same commit. Any revision should keep the folder tight, efficient, and easy to retrieve from.
 

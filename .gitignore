@@ -10,3 +10,6 @@
 
 # Optional: macOS folder metadata
 .fseventsd
+
+# Temporary publish worktree
+.publish-main/

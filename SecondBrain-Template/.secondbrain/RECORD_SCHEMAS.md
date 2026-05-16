@@ -1,15 +1,15 @@
 # Record Schemas
 
-These schemas are guidance for consistent storage. They do not require every field for every record.
+These examples are guidance for consistent record metadata. They do not require every field for every record and do not imply a separate global routing file.
 
-## File Index Entry
+## Record Metadata
 
 ```json
 {
 	"id": "subject.type.slug",
 	"title": "Human-readable title",
 	"subject": "subject-name",
-	"type": "record | source_artifact | summary | index | log | report",
+	"type": "record | source_artifact | summary | routing | log | report",
 	"path": "subject/path.md",
 	"external_url": null,
 	"status": "current | archived | draft | superseded",
@@ -25,7 +25,7 @@ These schemas are guidance for consistent storage. They do not require every fie
 }
 ```
 
-## Subject Index Entry
+## Subject Routing Metadata
 
 ```json
 {
@@ -41,7 +41,7 @@ These schemas are guidance for consistent storage. They do not require every fie
 }
 ```
 
-## Entity Entry
+## Entity Metadata
 
 ```json
 {

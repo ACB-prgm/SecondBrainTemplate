@@ -33,7 +33,7 @@ When a source artifact is stored outside GitHub, such as a PDF, image, scan, spr
 - retrieval aliases
 - sensitivity
 
-Use `templates/source_artifact_note.md`.
+Use `.templates/source_artifact_note.md`.
 
 ## File Promotion
 
@@ -57,11 +57,11 @@ If a refactor seems useful but is not clearly necessary, ask the user before mov
 
 ## Avoid Over-Structuring
 
-Do not create deep folder trees prematurely. Start with a subject README, one or two canonical files, and index entries. Add subfolders only when there are multiple records of the same type or a clear ongoing project.
+Do not create deep folder trees prematurely. Start with a subject README, one or two canonical files, and concise local routing notes. Add subfolders only when there are multiple records of the same type or a clear ongoing project.
 
 ## Duplicate Prevention
 
-Before creating a new task, calendar event, canonical file, log entry, or dataset, check for likely existing duplicates using indexes, subject files, recent records, and current open tasks/events when appropriate.
+Before creating a new task, calendar event, canonical file, log entry, or dataset, check for likely existing duplicates using `.user/MANIFEST.md`, `.user/ALIASES.md`, subject files, recent records, and current open tasks/events when appropriate.
 
 Prefer updating or extending an existing item over creating duplicate structures.
 
