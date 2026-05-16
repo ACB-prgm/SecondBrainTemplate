@@ -10,6 +10,7 @@ SecondBrain may store information the user chooses to save, including:
 - source references and companion notes for files stored elsewhere
 - user preferences in `.user/USER_PREFS.md`
 - data-quality follow-ups in `.user/FOLLOW-UPS.md`
+- user-specific entity metadata in `.user/ENTITIES.json`
 - template operating files under `.secondbrain/`
 - optional skill files under `.skills/`
 - optional references to Google Task IDs, Calendar event IDs, Calendar links, or Google Sheets IDs/links when useful
@@ -55,7 +56,7 @@ Google API data is handled by Google under Google's terms and privacy policies. 
 
 Template sync should update only template-managed files.
 
-It must not overwrite user data, subject folders, `.user/` files, or routing metadata after creation unless the user explicitly instructs and confirms that action.
+It must not overwrite user data, subject folders, `.user/` files, entity metadata, or routing metadata after creation unless the user explicitly instructs and confirms that action.
 
 `.user/USER_PREFS.md` and `.user/FOLLOW-UPS.md` may be read during bootstrap but are user-managed after creation.
 

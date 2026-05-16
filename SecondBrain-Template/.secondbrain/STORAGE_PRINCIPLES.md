@@ -59,9 +59,29 @@ If a refactor seems useful but is not clearly necessary, ask the user before mov
 
 Do not create deep folder trees prematurely. Start with a subject README, one or two canonical files, and concise local routing notes. Add subfolders only when there are multiple records of the same type or a clear ongoing project.
 
+## Entity Registry
+
+Update `.user/ENTITIES.json` when incoming information introduces or materially updates a durable user-specific real-world entity that is likely to recur or improve retrieval.
+
+Good entity candidates include people, clinicians, organizations, businesses, vendors, properties, accounts, institutions, agencies, and user-specific services or systems.
+
+If `.user/ENTITIES.json` is missing, create it with:
+
+```json
+{
+  "version": 1,
+  "updated_date": "YYYY-MM-DD",
+  "entities": []
+}
+```
+
+Do not add medications, diagnoses, conditions, symptoms, procedures, labs, allergies, generic concepts, tags, ordinary subject names, one-off receipts, or individual source artifacts as entities. Store those in the relevant subject records instead.
+
+Keep entity notes short and factual. Do not duplicate full records inside entity notes; use `related_files` to point to canonical records.
+
 ## Duplicate Prevention
 
-Before creating a new task, calendar event, canonical file, log entry, or dataset, check for likely existing duplicates using `.user/MANIFEST.md`, `.user/ALIASES.md`, subject files, recent records, and current open tasks/events when appropriate.
+Before creating a new task, calendar event, canonical file, log entry, entity, or dataset, check for likely existing duplicates using `.user/MANIFEST.md`, `.user/ALIASES.md`, `.user/ENTITIES.json`, subject files, recent records, and current open tasks/events when appropriate.
 
 Prefer updating or extending an existing item over creating duplicate structures.
 

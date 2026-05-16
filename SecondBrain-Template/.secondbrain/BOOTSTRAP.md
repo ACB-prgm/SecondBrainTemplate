@@ -11,8 +11,9 @@ Before any storage, retrieval, update, sync, deletion, or report task, establish
 5. Read `.secondbrain/TEMPLATE_CONFIG.json` from `SecondBrain`.
 6. Read each required operating file listed in `TEMPLATE_CONFIG.json.required_bootstrap_files`.
 7. Read `.user/FOLLOW-UPS.md` if it exists.
-8. Check whether the template repo has changed by comparing the current template branch HEAD SHA with `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
-9. If the template changed, follow `.secondbrain/TEMPLATE_SYNC.md` before continuing, unless the user explicitly asks to skip template sync.
+8. Read `.user/ENTITIES.json` if it exists.
+9. Check whether the template repo has changed by comparing the current template branch HEAD SHA with `.secondbrain/TEMPLATE_STATE.json.last_synced_template_sha`.
+10. If the template changed, follow `.secondbrain/TEMPLATE_SYNC.md` before continuing, unless the user explicitly asks to skip template sync.
 
 ## User Preferences
 
@@ -28,6 +29,16 @@ Keep preferences concise and remove stale or superseded entries.
 ## Follow-ups
 
 Follow-up rules live in `.secondbrain/FOLLOW_UPS.md`. Read `.user/FOLLOW-UPS.md` during bootstrap and remove resolved items only after updating the related record.
+
+## Entities
+
+`.user/ENTITIES.json` stores durable user-specific real-world entities that improve retrieval and disambiguation across subjects. Read it during bootstrap if present. If it is missing, continue and create it on the first entity write.
+
+Use entities for people, clinicians, organizations, businesses, vendors, properties, accounts, institutions, agencies, and similar user-specific real-world actors or objects.
+
+Do not use entities for medications, diagnoses, conditions, procedures, tags, generic concepts, ordinary subject names, one-off receipts, individual source artifacts, or items inferable from the folder tree.
+
+`.user/ALIASES.md` is different: it is a sparse routing aid for non-obvious names and phrases. Entity aliases belong on entity records when they identify the same durable entity.
 
 ## Hard Gate
 

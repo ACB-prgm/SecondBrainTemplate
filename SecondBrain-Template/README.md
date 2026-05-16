@@ -8,6 +8,7 @@ This repository is intentionally minimal. It does **not** define fixed life cate
 
 - `.user/MANIFEST.md` is the human-readable map of the repository.
 - `.user/ALIASES.md` stores sparse non-obvious aliases when needed.
+- `.user/ENTITIES.json` stores durable user-specific people, organizations, businesses, and similar entities.
 - `.secondbrain/*.md` files define the operating model and must be read before storage, retrieval, update, or reporting work.
 - `.templates/*.md` files provide reusable note and subject-folder templates.
 - Top-level subject folders are created only when durable content justifies them.

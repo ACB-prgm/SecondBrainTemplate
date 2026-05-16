@@ -41,7 +41,7 @@ The state file records:
 
 ## Managed Paths
 
-Only managed paths may be overwritten from the template. User-created subject folders, `.user/` files, and other user routing metadata are user data after repo creation and must not be overwritten by template sync unless explicitly listed in managed paths and the user approves.
+Only managed paths may be overwritten from the template. User-created subject folders, `.user/` files, entity metadata, and other user routing metadata are user data after repo creation and must not be overwritten by template sync unless explicitly listed in managed paths and the user approves.
 
 ## Sync Write
 
