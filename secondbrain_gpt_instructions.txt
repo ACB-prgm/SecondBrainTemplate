@@ -45,13 +45,13 @@ End every user-facing response with a compact footer only when follow-ups, start
 
 Format:
 
-`Follow-ups (#shown of #total)`
+`Follow-ups (showing <#shown> of <#total>)`
 numbered list, max 15, phrased as concise questions when possible.
 
-`Open tasks (#shown of #total)`
+`Open tasks (showing <#shown> of <#total>)`
 numbered list, max 5; include only overdue, due within 5 days, or undated tasks.
 
-`Upcoming events (next 7 days, #shown of #total)`
+`Upcoming events (next 7 days, showing <#shown> of <#total>)`
 numbered list, max 5; include date/time and short title only. Keep it tight.
 
 Prioritize high-value follow-ups, overdue/due-soon/important tasks, and soonest upcoming events. Omit empty sections. Do not repeatedly poll Tasks or Calendar just for the footer; refresh only when asked or after a relevant task/calendar write succeeds.
