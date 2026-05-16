@@ -35,8 +35,7 @@ echo "Cloning $PUBLISH_BRANCH into temporary publish directory..."
 git clone --branch "$PUBLISH_BRANCH" --single-branch "$REMOTE_URL" "$WORKTREE_DIR"
 
 echo "Clearing publish branch contents..."
-find "$WORKTREE_DIR" -mindepth 1 \
-	-not -path "$WORKTREE_DIR/.git" \
+find "$WORKTREE_DIR" -mindepth 1 -maxdepth 1 \
 	-not -name ".git" \
 	-exec rm -rf {} +
 
