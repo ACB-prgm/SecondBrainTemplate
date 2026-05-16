@@ -5,11 +5,10 @@ REPO_ROOT="$(git rev-parse --show-toplevel)"
 SOURCE_DIR="$REPO_ROOT/SecondBrain-Template"
 PUBLISH_BRANCH="main"
 WORKTREE_DIR="$REPO_ROOT/.publish-main"
+REMOTE_URL="$(git config --get remote.origin.url)"
 
 cleanup() {
-	if git -C "$REPO_ROOT" worktree list --porcelain | grep -Fxq "worktree $WORKTREE_DIR"; then
-		git -C "$REPO_ROOT" worktree remove "$WORKTREE_DIR" --force
-	elif [[ -d "$WORKTREE_DIR" ]]; then
+	if [[ -d "$WORKTREE_DIR" ]]; then
 		rm -rf "$WORKTREE_DIR"
 	fi
 }
@@ -32,8 +31,8 @@ cd "$REPO_ROOT"
 echo "Fetching latest remote refs..."
 git fetch --no-write-fetch-head origin
 
-echo "Creating worktree for $PUBLISH_BRANCH..."
-git worktree add "$WORKTREE_DIR" "origin/$PUBLISH_BRANCH"
+echo "Cloning $PUBLISH_BRANCH into temporary publish directory..."
+git clone --branch "$PUBLISH_BRANCH" --single-branch "$REMOTE_URL" "$WORKTREE_DIR"
 
 echo "Clearing publish branch contents..."
 find "$WORKTREE_DIR" -mindepth 1 \
