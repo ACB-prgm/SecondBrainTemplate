@@ -30,7 +30,7 @@ fi
 cd "$REPO_ROOT"
 
 echo "Fetching latest remote refs..."
-git fetch origin
+git fetch --no-write-fetch-head origin
 
 echo "Creating worktree for $PUBLISH_BRANCH..."
 git worktree add "$WORKTREE_DIR" "origin/$PUBLISH_BRANCH"
